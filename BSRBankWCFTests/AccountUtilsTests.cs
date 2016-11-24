@@ -14,12 +14,12 @@ namespace BSRBankWCF.Tests
         [TestMethod()]
         public void createAccountIdTest()
         {
-            Assert.AreEqual(AccountUtils.createAccountId(15),"0000000000000015");
-            Assert.AreEqual(AccountUtils.createAccountId(150),"0000000000000150");
-            Assert.AreEqual(AccountUtils.createAccountId(96),"0000000000000096");
-            Assert.AreEqual(AccountUtils.createAccountId(1500),"0000000000001500");
-            Assert.AreEqual(AccountUtils.createAccountId(1),"0000000000000001");
-            Assert.AreEqual(AccountUtils.createAccountId(15),"0000000000000015");
+            Assert.AreEqual(AccountUtils.CreateAccountId(15),"0000000000000015");
+            Assert.AreEqual(AccountUtils.CreateAccountId(150),"0000000000000150");
+            Assert.AreEqual(AccountUtils.CreateAccountId(96),"0000000000000096");
+            Assert.AreEqual(AccountUtils.CreateAccountId(1500),"0000000000001500");
+            Assert.AreEqual(AccountUtils.CreateAccountId(1),"0000000000000001");
+            Assert.AreEqual(AccountUtils.CreateAccountId(15),"0000000000000015");
         }
 
         [TestMethod]

@@ -7,6 +7,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BSRBankWCF", "BSRBankWCF\BS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BSRBankWCFTests", "BSRBankWCFTests\BSRBankWCFTests.csproj", "{C57A1E8E-0956-48DF-A3A7-F84E15628DFA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "Client\Client.csproj", "{F98CB02C-3C75-41FB-BE20-9A4EA5D8E2FE}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2ADB507F-52AF-477B-9327-D9F42EB7D723} = {2ADB507F-52AF-477B-9327-D9F42EB7D723}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +26,10 @@ Global
 		{C57A1E8E-0956-48DF-A3A7-F84E15628DFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C57A1E8E-0956-48DF-A3A7-F84E15628DFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C57A1E8E-0956-48DF-A3A7-F84E15628DFA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F98CB02C-3C75-41FB-BE20-9A4EA5D8E2FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F98CB02C-3C75-41FB-BE20-9A4EA5D8E2FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F98CB02C-3C75-41FB-BE20-9A4EA5D8E2FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F98CB02C-3C75-41FB-BE20-9A4EA5D8E2FE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

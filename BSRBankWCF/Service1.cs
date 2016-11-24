@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Runtime.Serialization;
-using System.ServiceModel;
-using System.Text;
-using BSRBankWCF.Models;
+﻿using BSRBankWCF.Models;
 using MongoDB.Driver;
 
 namespace BSRBankWCF
@@ -23,13 +16,20 @@ namespace BSRBankWCF
             return usr != null ? usr.BankAccountNumber : "No user in database !";
         }
 
-        public void AddUser( User user )
+        public bool AddUser( User user )
         {
-            if ( user == null ) return;
+            if ( user.Name == "" || user.Password == "") return false;
+            user = new User(user.Name, user.Password);
 
             var client = new MongoClient(Constants.DatabaseUri);
             var database = client.GetDatabase(Constants.DatabaseName);
             database.GetCollection<User>(Constants.UserCollection).InsertOneAsync(user);
+            return true;
+        }
+
+        public string Hello()
+        {
+            return "Hello";
         }
     }
 }

@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="AccountUtils.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="Host.cs" />
     <Compile Include="IService1.cs" />
     <Compile Include="Models\Transfer.cs" />
     <Compile Include="Models\User.cs" />

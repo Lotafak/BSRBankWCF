@@ -12,8 +12,10 @@ namespace BSRBankWCF
         string GetBankAccountNumber( User user );
 
         [OperationContract]
-        void AddUser(User user);
+        bool AddUser(User user);
 
         //database.GetCollection<Listen>(Constants.ListenCollection).InsertMany( listenSet,new InsertManyOptions {IsOrdered = false});
+        [OperationContract]
+        string Hello();
     }
 }

@@ -12,25 +12,25 @@ namespace BSRBankWCF
         {
             if ( acc.Length != 26 ) return false;
             var check = acc.Substring(2) + acc.Substring(0, 2);
-            var intarr = new int[4];
+            var intarr = new string[4];
             check = check.TrimStart('0');
             for ( var i = 0; i < intarr.Length; i++ )
             {
                 if ( i * 6 + 6 < check.Length )
-                    intarr[i] = int.Parse(check.Substring(i * 6, 6));
+                    intarr[i] = check.Substring(i * 6, 6);
                 else
-                    intarr[i] = int.Parse(check.Substring(i * 6));
+                    intarr[i] = check.Substring(i * 6);
             }
             for ( var i = 0; i < intarr.Length; i++ )
             {
-                var mod = intarr[i] % 97;
+                var mod = int.Parse(intarr[i]) % 97;
                 if ( i >= intarr.Length - 1 )
                 {
                     return mod == 1;
                 }
                 var next = intarr[i + 1];
                 var nextString = mod + next.ToString();
-                intarr[i + 1] = int.Parse(nextString);
+                intarr[i + 1] = nextString;
             }
             return false;
         }
@@ -39,20 +39,20 @@ namespace BSRBankWCF
         {
             if ( bankId.Length != 8 ) return "";
 
-            var accountIdWithZeros = createAccountId(id);
+            var accountIdWithZeros = CreateAccountId(id);
             var check = bankId + accountIdWithZeros + "00";
-            var intarr = new int[4];
+            var intarr = new string[4];
             check = check.TrimStart('0');
             for ( var i = 0; i < intarr.Length; i++ )
             {
                 if ( i * 6 + 6 < check.Length )
-                    intarr[i] = int.Parse(check.Substring(i * 6, 6));
+                    intarr[i] = check.Substring(i * 6, 6);
                 else
-                    intarr[i] = int.Parse(check.Substring(i * 6));
+                    intarr[i] = check.Substring(i * 6);
             }
             for ( var i = 0; i < intarr.Length; i++ )
             {
-                var mod = intarr[i] % 97;
+                var mod = int.Parse(intarr[i]) % 97;
                 if (i >= intarr.Length - 1)
                 {
                     var chksum = 98 - mod;
@@ -63,14 +63,14 @@ namespace BSRBankWCF
                     return strchcksum + bankId + accountIdWithZeros;
                 }
                 var next = intarr[i + 1];
-                var nextString = mod + next.ToString();
-                intarr[i + 1] = int.Parse(nextString);
+                var nextString = mod + next;
+                intarr[i + 1] = nextString;
             }
             return "";
 
         }
 
-        public static string createAccountId(int id)
+        public static string CreateAccountId(int id)
         {
             var sb = new StringBuilder();
             for (var i = 0; i < 16 - id.ToString().Length; i++)

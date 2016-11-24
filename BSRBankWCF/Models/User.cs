@@ -14,7 +14,7 @@ namespace BSRBankWCF.Models
             Name = name;
             Password = password;
             Amount = 0;
-            //BankAccountNumber = AccountUtils.CreateAccountNumber(Constants.BankId, Id);
+            BankAccountNumber = AccountUtils.CreateAccountNumber(Constants.BankId, Id);
         }
 
         [BsonId]
