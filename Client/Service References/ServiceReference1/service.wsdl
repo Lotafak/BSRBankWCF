@@ -5,6 +5,7 @@
       <xsd:import namespace="http://tempuri.org/" />
       <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/BSRBankWCF.Models" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/BSRBankWCF" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IService1_GetBankAccountNumber_InputMessage">
@@ -25,6 +26,12 @@
   <wsdl:message name="IService1_Hello_OutputMessage">
     <wsdl:part name="parameters" element="tns:HelloResponse" />
   </wsdl:message>
+  <wsdl:message name="IService1_ValidateUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:ValidateUser" />
+  </wsdl:message>
+  <wsdl:message name="IService1_ValidateUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ValidateUserResponse" />
+  </wsdl:message>
   <wsdl:portType name="IService1">
     <wsdl:operation name="GetBankAccountNumber">
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetBankAccountNumber" message="tns:IService1_GetBankAccountNumber_InputMessage" />
@@ -37,6 +44,10 @@
     <wsdl:operation name="Hello">
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/Hello" message="tns:IService1_Hello_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IService1/HelloResponse" message="tns:IService1_Hello_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ValidateUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/ValidateUser" message="tns:IService1_ValidateUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/ValidateUserResponse" message="tns:IService1_ValidateUser_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IService1" type="tns:IService1">
@@ -61,6 +72,15 @@
     </wsdl:operation>
     <wsdl:operation name="Hello">
       <soap:operation soapAction="http://tempuri.org/IService1/Hello" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ValidateUser">
+      <soap:operation soapAction="http://tempuri.org/IService1/ValidateUser" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

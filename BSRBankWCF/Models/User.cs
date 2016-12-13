@@ -8,10 +8,10 @@ namespace BSRBankWCF.Models
     [DataContract]
     public class User
     {
-        public User(string name, string password)
+        public User(string login, string password)
         {
             Id = getLastIndex() + 1;
-            Name = name;
+            Login = login;
             Password = password;
             Amount = 0;
             BankAccountNumber = AccountUtils.CreateAccountNumber(Constants.BankId, Id);
@@ -21,7 +21,7 @@ namespace BSRBankWCF.Models
         public int Id { get; set; }
 
         [DataMember]
-        public string Name { get; set; }
+        public string Login { get; set; }
         
         [DataMember]
         public string Password { get; set; }

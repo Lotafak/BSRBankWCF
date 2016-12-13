@@ -29,7 +29,7 @@ namespace Client.ServiceReference1 {
         private string BankAccountNumberField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string NameField;
+        private string LoginField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string PasswordField;
@@ -71,14 +71,14 @@ namespace Client.ServiceReference1 {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Name {
+        public string Login {
             get {
-                return this.NameField;
+                return this.LoginField;
             }
             set {
-                if ((object.ReferenceEquals(this.NameField, value) != true)) {
-                    this.NameField = value;
-                    this.RaisePropertyChanged("Name");
+                if ((object.ReferenceEquals(this.LoginField, value) != true)) {
+                    this.LoginField = value;
+                    this.RaisePropertyChanged("Login");
                 }
             }
         }
@@ -106,27 +106,110 @@ namespace Client.ServiceReference1 {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Message", Namespace="http://schemas.datacontract.org/2004/07/BSRBankWCF")]
+    [System.SerializableAttribute()]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Client.ServiceReference1.ErrorMessage))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Client.ServiceReference1.ResultMessage))]
+    public partial class Message : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsErrorField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string MessageTextField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsError {
+            get {
+                return this.IsErrorField;
+            }
+            set {
+                if ((this.IsErrorField.Equals(value) != true)) {
+                    this.IsErrorField = value;
+                    this.RaisePropertyChanged("IsError");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string MessageText {
+            get {
+                return this.MessageTextField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.MessageTextField, value) != true)) {
+                    this.MessageTextField = value;
+                    this.RaisePropertyChanged("MessageText");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ErrorMessage", Namespace="http://schemas.datacontract.org/2004/07/BSRBankWCF")]
+    [System.SerializableAttribute()]
+    public partial class ErrorMessage : Client.ServiceReference1.Message {
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ResultMessage", Namespace="http://schemas.datacontract.org/2004/07/BSRBankWCF")]
+    [System.SerializableAttribute()]
+    public partial class ResultMessage : Client.ServiceReference1.Message {
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServiceReference1.IService1")]
     public interface IService1 {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetBankAccountNumber", ReplyAction="http://tempuri.org/IService1/GetBankAccountNumberResponse")]
-        string GetBankAccountNumber(Client.ServiceReference1.User user);
+        Client.ServiceReference1.Message GetBankAccountNumber(Client.ServiceReference1.User user);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetBankAccountNumber", ReplyAction="http://tempuri.org/IService1/GetBankAccountNumberResponse")]
-        System.Threading.Tasks.Task<string> GetBankAccountNumberAsync(Client.ServiceReference1.User user);
+        System.Threading.Tasks.Task<Client.ServiceReference1.Message> GetBankAccountNumberAsync(Client.ServiceReference1.User user);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/AddUser", ReplyAction="http://tempuri.org/IService1/AddUserResponse")]
-        bool AddUser(Client.ServiceReference1.User user);
+        Client.ServiceReference1.Message AddUser(string login, string password);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/AddUser", ReplyAction="http://tempuri.org/IService1/AddUserResponse")]
-        System.Threading.Tasks.Task<bool> AddUserAsync(Client.ServiceReference1.User user);
+        System.Threading.Tasks.Task<Client.ServiceReference1.Message> AddUserAsync(string login, string password);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/Hello", ReplyAction="http://tempuri.org/IService1/HelloResponse")]
         string Hello();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/Hello", ReplyAction="http://tempuri.org/IService1/HelloResponse")]
         System.Threading.Tasks.Task<string> HelloAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ValidateUser", ReplyAction="http://tempuri.org/IService1/ValidateUserResponse")]
+        Client.ServiceReference1.Message ValidateUser(string login, string password);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ValidateUser", ReplyAction="http://tempuri.org/IService1/ValidateUserResponse")]
+        System.Threading.Tasks.Task<Client.ServiceReference1.Message> ValidateUserAsync(string login, string password);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -156,20 +239,20 @@ namespace Client.ServiceReference1 {
                 base(binding, remoteAddress) {
         }
         
-        public string GetBankAccountNumber(Client.ServiceReference1.User user) {
+        public Client.ServiceReference1.Message GetBankAccountNumber(Client.ServiceReference1.User user) {
             return base.Channel.GetBankAccountNumber(user);
         }
         
-        public System.Threading.Tasks.Task<string> GetBankAccountNumberAsync(Client.ServiceReference1.User user) {
+        public System.Threading.Tasks.Task<Client.ServiceReference1.Message> GetBankAccountNumberAsync(Client.ServiceReference1.User user) {
             return base.Channel.GetBankAccountNumberAsync(user);
         }
         
-        public bool AddUser(Client.ServiceReference1.User user) {
-            return base.Channel.AddUser(user);
+        public Client.ServiceReference1.Message AddUser(string login, string password) {
+            return base.Channel.AddUser(login, password);
         }
         
-        public System.Threading.Tasks.Task<bool> AddUserAsync(Client.ServiceReference1.User user) {
-            return base.Channel.AddUserAsync(user);
+        public System.Threading.Tasks.Task<Client.ServiceReference1.Message> AddUserAsync(string login, string password) {
+            return base.Channel.AddUserAsync(login, password);
         }
         
         public string Hello() {
@@ -178,6 +261,14 @@ namespace Client.ServiceReference1 {
         
         public System.Threading.Tasks.Task<string> HelloAsync() {
             return base.Channel.HelloAsync();
+        }
+        
+        public Client.ServiceReference1.Message ValidateUser(string login, string password) {
+            return base.Channel.ValidateUser(login, password);
+        }
+        
+        public System.Threading.Tasks.Task<Client.ServiceReference1.Message> ValidateUserAsync(string login, string password) {
+            return base.Channel.ValidateUserAsync(login, password);
         }
     }
 }

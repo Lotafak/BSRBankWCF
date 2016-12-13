@@ -21,32 +21,30 @@ namespace Client
     /// </summary>
     public partial class MainWindow : Window
     {
-        
-
         public MainWindow()
         {
             InitializeComponent();
             
-            Proxy proxy = new Proxy();
+            var proxy = new Proxy();
             //label.Content = proxy.Hello();
         }
 
-        void loginWindow_DialogFinished(object sender, LoginWindowEventArgs e)
+        public void loginWindow_DialogFinished(object sender, LoginWindowEventArgs e)
         {
-            //MessageBox.Show("DialogFinished");
-            Proxy proxy = new Proxy();
-            bool success = proxy.AddUser(new User()
-            {
-                Password = e.Password,
-                Name = e.Username
-            });
-            MessageBox.Show(success ? "Użytkownik dodany !" : "Somethings went wrong :(");
+            MessageBox.Show("DialogFinished");
+            //var proxy = new Proxy();
+            //var success = proxy.AddUser(new User()
+            //{
+            //    Password = e.Password,
+            //    Name = e.Username
+            //});
+            //MessageBox.Show(success ? "Użytkownik dodany !" : "Somethings went wrong :(");
         }
 
         private void login_button_Copy_Click( object sender, RoutedEventArgs e )
         {
-            LoginWindow loginWindow = new LoginWindow();
-            loginWindow.DialogFinished += new EventHandler<LoginWindowEventArgs>(loginWindow_DialogFinished);
+            var loginWindow = new LoginWindow();
+            loginWindow.DialogFinished += loginWindow_DialogFinished;
             loginWindow.Show();
         }
     }

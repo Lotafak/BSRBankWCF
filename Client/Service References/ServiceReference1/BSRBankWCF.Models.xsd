@@ -4,7 +4,7 @@
     <xs:sequence>
       <xs:element minOccurs="0" name="Amount" type="xs:decimal" />
       <xs:element minOccurs="0" name="BankAccountNumber" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Login" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Password" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>

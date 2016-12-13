@@ -1,18 +1,13 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using BSRBankWCF;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BSRBankWCF;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace BSRBankWCF.Tests
+namespace BSRBankWCFTests
 {
-    [TestClass()]
+    [TestClass]
     public class AccountUtilsTests
     {
-        [TestMethod()]
-        public void createAccountIdTest()
+        [TestMethod]
+        public void CreateAccountIdTest()
         {
             Assert.AreEqual(AccountUtils.CreateAccountId(15),"0000000000000015");
             Assert.AreEqual(AccountUtils.CreateAccountId(150),"0000000000000150");
@@ -23,7 +18,7 @@ namespace BSRBankWCF.Tests
         }
 
         [TestMethod]
-        public void createAccountNumberTest()
+        public void CreateAccountNumberTest()
         {
             Assert.IsTrue(AccountUtils.ValidateAccountNumber(
                 AccountUtils.CreateAccountNumber("00109562", 15)));

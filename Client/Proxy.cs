@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.ServiceModel;
-using System.Text;
+﻿using System.ServiceModel;
 using System.Threading.Tasks;
 using Client.ServiceReference1;
 
@@ -10,24 +6,24 @@ namespace Client
 {
     class Proxy : ClientBase<IService1>, IService1
     {
-        public string GetBankAccountNumber(User user)
+        Message IService1.GetBankAccountNumber( User user )
         {
             return Channel.GetBankAccountNumber(user);
         }
 
-        public Task<string> GetBankAccountNumberAsync(User user)
+        Task<Message> IService1.GetBankAccountNumberAsync(User user)
         {
-            throw new NotImplementedException();
+            return Channel.GetBankAccountNumberAsync(user);
         }
 
-        public bool AddUser(User user)
+        public Message AddUser(string login, string password)
         {
-            return Channel.AddUser(user);
+            return Channel.AddUser(login, password);
         }
 
-        public Task<bool> AddUserAsync(User user)
+        public Task<Message> AddUserAsync(string login, string password)
         {
-            throw new NotImplementedException();
+            return Channel.AddUserAsync(login, password);
         }
 
         public string Hello()
@@ -38,6 +34,16 @@ namespace Client
         public Task<string> HelloAsync()
         {
             return Channel.HelloAsync();
+        }
+
+        public Message ValidateUser( string login, string password )
+        {
+            return Channel.ValidateUser(login, password);
+        }
+
+        public Task<Message> ValidateUserAsync( string login, string password )
+        {
+            return Channel.ValidateUserAsync(login, password);
         }
     }
 }

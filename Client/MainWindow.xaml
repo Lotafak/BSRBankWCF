@@ -6,13 +6,5 @@
         xmlns:local="clr-namespace:Client"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        <Label x:Name="login_label" Content="Login" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.451,0.523" Height="26" Width="97"/>
-        <Label x:Name="password_label" Content="Hasło" HorizontalAlignment="Left" Margin="10,69,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.451,0.523" Height="26" Width="97"/>
-        <TextBox x:Name="login_textBox" HorizontalAlignment="Left" Height="23" Margin="10,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="password_textBox" HorizontalAlignment="Left" Height="23" Margin="10,100,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <Button x:Name="login_button" Content="Login" HorizontalAlignment="Left" Margin="10,128,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button x:Name="create_account_button" Content="Create" HorizontalAlignment="Left" Margin="10,289,0,0" VerticalAlignment="Top" Width="75" Click="login_button_Copy_Click"/>
-        <Label x:Name="create_account_label" Content="New user ? Create account !" HorizontalAlignment="Left" Margin="10,258,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.451,0.523" Height="26" Width="161"/>
-    </Grid>
+    <Grid/>
 </Window>
