@@ -25,7 +25,7 @@ namespace BSRBankWCF
                     return mod == 1;
                 }
                 var next = intarr[i + 1];
-                var nextString = mod + next.ToString();
+                var nextString = mod + next;
                 intarr[i + 1] = nextString;
             }
             return false;

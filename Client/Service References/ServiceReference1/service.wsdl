@@ -20,12 +20,6 @@
   <wsdl:message name="IService1_AddUser_OutputMessage">
     <wsdl:part name="parameters" element="tns:AddUserResponse" />
   </wsdl:message>
-  <wsdl:message name="IService1_Hello_InputMessage">
-    <wsdl:part name="parameters" element="tns:Hello" />
-  </wsdl:message>
-  <wsdl:message name="IService1_Hello_OutputMessage">
-    <wsdl:part name="parameters" element="tns:HelloResponse" />
-  </wsdl:message>
   <wsdl:message name="IService1_ValidateUser_InputMessage">
     <wsdl:part name="parameters" element="tns:ValidateUser" />
   </wsdl:message>
@@ -40,10 +34,6 @@
     <wsdl:operation name="AddUser">
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/AddUser" message="tns:IService1_AddUser_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IService1/AddUserResponse" message="tns:IService1_AddUser_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="Hello">
-      <wsdl:input wsaw:Action="http://tempuri.org/IService1/Hello" message="tns:IService1_Hello_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IService1/HelloResponse" message="tns:IService1_Hello_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="ValidateUser">
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/ValidateUser" message="tns:IService1_ValidateUser_InputMessage" />
@@ -63,15 +53,6 @@
     </wsdl:operation>
     <wsdl:operation name="AddUser">
       <soap:operation soapAction="http://tempuri.org/IService1/AddUser" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="Hello">
-      <soap:operation soapAction="http://tempuri.org/IService1/Hello" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

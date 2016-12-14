@@ -199,12 +199,6 @@ namespace Client.ServiceReference1 {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/AddUser", ReplyAction="http://tempuri.org/IService1/AddUserResponse")]
         System.Threading.Tasks.Task<Client.ServiceReference1.Message> AddUserAsync(string login, string password);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/Hello", ReplyAction="http://tempuri.org/IService1/HelloResponse")]
-        string Hello();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/Hello", ReplyAction="http://tempuri.org/IService1/HelloResponse")]
-        System.Threading.Tasks.Task<string> HelloAsync();
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ValidateUser", ReplyAction="http://tempuri.org/IService1/ValidateUserResponse")]
         Client.ServiceReference1.Message ValidateUser(string login, string password);
         
@@ -253,14 +247,6 @@ namespace Client.ServiceReference1 {
         
         public System.Threading.Tasks.Task<Client.ServiceReference1.Message> AddUserAsync(string login, string password) {
             return base.Channel.AddUserAsync(login, password);
-        }
-        
-        public string Hello() {
-            return base.Channel.Hello();
-        }
-        
-        public System.Threading.Tasks.Task<string> HelloAsync() {
-            return base.Channel.HelloAsync();
         }
         
         public Client.ServiceReference1.Message ValidateUser(string login, string password) {

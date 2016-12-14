@@ -9,43 +9,60 @@ namespace Client
     /// </summary>
     public partial class LoginWindow : Window
     {
-        private MainWindow mainWindow = new MainWindow();
+        private readonly MainWindow _mainWindow = new MainWindow();
         public event EventHandler<LoginWindowEventArgs> DialogFinished;
         
         public LoginWindow()
         {
             InitializeComponent();
-            DialogFinished += mainWindow.loginWindow_DialogFinished;
+            DialogFinished += _mainWindow.loginWindow_LoginSuccesful;
         }
 
         private void regiser_button_OnClick( object sender, RoutedEventArgs e )
         {
-            // TODO: Some feedback about register status...
             var password = password_passwordBox.Password;
             var login = login_textBox.Text;
 
             if (login != "" && password != "")
             {
+                // Register client 
                 var proxy = new Proxy();
-                var success = proxy.AddUser(login, password);
-                //MessageBox.Show(success ? "Użytkownik dodany pomyślnie\n\nMożna się zalogować" : "Somethings went wrong :(");
+                var message = proxy.AddUser(login, password);
+
+                // Show return message (Wheather it is success or failure)
+                ClientUtils.ShowMessage(message);
+
+                // If something goes wrong don't reset Login and Password fields
+                if (message.IsError) return;
+
                 password_passwordBox.Password = "";
                 login_textBox.Text = "";
             } 
             else if (login_textBox.Text == "")
-                MessageBox.Show("Uzupełnij pole \"Login\"");
+                MessageBox.Show(Properties.Resources.LackOfLoginMessageBoxText);
             else if(password_passwordBox.Password == "")
-                MessageBox.Show("Uzupełnij pole \"Hasło\"");
+                MessageBox.Show(Properties.Resources.LackOfPasswordMessageBoxText);
         }
 
         private void cancel_button_OnClick( object sender, RoutedEventArgs e )
         {
+            // MainWindow object also needs to be destroyed
+            _mainWindow.Close();
+
             Close();
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            // MainWindow object needs to be destroyed
+            //_mainWindow.Close();
+
+            // TODO: Close main window only when exiting on purpose, not closing the loginWindow 
         }
 
         private void Login_button_OnClick(object sender, RoutedEventArgs e)
         {
-            // TODO: Pass the data to main window, extract strings to resources (everywhere actually)
+            // TODO: Pass the data to main window
             var password = password_passwordBox.Password;
             var login = login_textBox.Text;
 
@@ -55,19 +72,20 @@ namespace Client
                 var message = proxy.ValidateUser(login, password);
                 if (message.IsError)
                 {
-                    MessageBox.Show(message.MessageText);
+                    ClientUtils.ShowMessage(message);
+                    password_passwordBox.Password = "";
                     return;
                 }
 
                 DialogFinished?.Invoke(this,
                     new LoginWindowEventArgs(password, login));
-                mainWindow.Show();
-                Close();
+                _mainWindow.Show();
+                //Close();
             }
             else if ( login_textBox.Text == "" )
-                MessageBox.Show("Uzupełnij pole \"Login\"");
+                MessageBox.Show(Properties.Resources.LackOfLoginMessageBoxText);
             else if ( password_passwordBox.Password == "" )
-                MessageBox.Show("Uzupełnij pole \"Hasło\"");
+                MessageBox.Show(Properties.Resources.LackOfPasswordMessageBoxText);
         }
     }
 }

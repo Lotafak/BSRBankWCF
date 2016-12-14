@@ -26,6 +26,8 @@ namespace BSRBankWCFTests
                 AccountUtils.CreateAccountNumber("00109562", 1)));
             Assert.IsTrue(AccountUtils.ValidateAccountNumber(
                 AccountUtils.CreateAccountNumber("00109562", 150000)));
+            Assert.IsTrue(AccountUtils.ValidateAccountNumber(
+                AccountUtils.CreateAccountNumber("00109562", 00150000)));
         }
     }
 }

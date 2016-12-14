@@ -7,10 +7,7 @@ namespace BSRBankWCF
     {
         public Message GetBankAccountNumber( User user )
         {
-            var client = new MongoClient(Constants.DatabaseUri);
-            var database = client.GetDatabase(Constants.DatabaseName);
-
-            var usr = database.GetCollection<User>(Constants.UserCollection)
+            var usr = MongoRepository.GetDatabase().GetCollection<User>(Constants.UserCollection)
                 .Find(Builders<User>.Filter.Eq("name", user.Login))
                 .FirstOrDefault();
             return usr != null ? (Message) new ResultMessage(usr.BankAccountNumber) : new ErrorMessage("No user in database !");
@@ -22,22 +19,19 @@ namespace BSRBankWCF
 
             var user = new User(login, password);
 
-            var client = new MongoClient(Constants.DatabaseUri);
-            var database = client.GetDatabase(Constants.DatabaseName);
-            database.GetCollection<User>(Constants.UserCollection).InsertOneAsync(user);
-            return new ResultMessage($"Utworzono użytkownika: {login}");
-        }
-
-        public string Hello()
-        {
-            return "Hello";
+            var usr = MongoRepository.GetDatabase().GetCollection<User>(Constants.UserCollection)
+                .Find(Builders<User>.Filter.Eq("Login", login))
+                .FirstOrDefault();
+            if(usr == null)
+                MongoRepository.GetDatabase().GetCollection<User>(Constants.UserCollection).InsertOneAsync(user);
+            else
+                return new ErrorMessage($"Użytkownik o loginie: \"{login}\" już istenieje !");
+            return new ResultMessage($"Utworzono użytkownika \"{login}\"\nProszę się zalogować");
         }
 
         public Message ValidateUser( string login, string password )
         {
-            var client = new MongoClient(Constants.DatabaseUri);
-            var database = client.GetDatabase(Constants.DatabaseName);
-            var usr = database.GetCollection<User>(Constants.UserCollection)
+            var usr = MongoRepository.GetDatabase().GetCollection<User>(Constants.UserCollection)
                 .Find(Builders<User>.Filter.Eq("Login", login))
                 .FirstOrDefault();
             if ( usr == null )

@@ -26,16 +26,6 @@ namespace Client
             return Channel.AddUserAsync(login, password);
         }
 
-        public string Hello()
-        {
-            return Channel.Hello();
-        }
-
-        public Task<string> HelloAsync()
-        {
-            return Channel.HelloAsync();
-        }
-
         public Message ValidateUser( string login, string password )
         {
             return Channel.ValidateUser(login, password);

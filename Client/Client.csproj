@@ -57,6 +57,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ClientUtils.cs" />
     <Compile Include="LoginWindowEventArgs.cs" />
     <Compile Include="Proxy.cs" />
     <Compile Include="Service References\ServiceReference1\Reference.cs">

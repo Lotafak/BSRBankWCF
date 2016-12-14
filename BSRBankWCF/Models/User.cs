@@ -34,10 +34,7 @@ namespace BSRBankWCF.Models
 
         private int getLastIndex()
         {
-            var client = new MongoClient(Constants.DatabaseUri);
-            var database = client.GetDatabase(Constants.DatabaseName);
-
-            var user =  database.GetCollection<User>(Constants.UserCollection)
+            var user =  MongoRepository.GetDatabase().GetCollection<User>(Constants.UserCollection)
                 .Find(new BsonDocument())
                 .Sort(new BsonDocument("_id", -1))
                 .FirstOrDefault();
