@@ -4,9 +4,7 @@
   <xs:complexType name="Withdraw">
     <xs:complexContent mixed="false">
       <xs:extension xmlns:q1="http://schemas.datacontract.org/2004/07/BSRBankWCF.Models" base="q1:WithdrawDeposit">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="_amount" type="xs:decimal" />
-        </xs:sequence>
+        <xs:sequence />
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

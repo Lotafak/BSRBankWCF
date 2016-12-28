@@ -19,7 +19,7 @@ namespace BSRBankWCF.Mongo
         public override void Serialize(BsonSerializationContext context, BsonSerializationArgs e, decimal value)
         {
             var realValue = (decimal) value;
-            context.Writer.WriteInt64(Convert.ToInt32(realValue * DECIMAL_PLACE));
+            context.Writer.WriteInt64(Convert.ToInt64(realValue * DECIMAL_PLACE));
         }
     }
 }

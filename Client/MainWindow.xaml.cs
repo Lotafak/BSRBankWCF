@@ -38,7 +38,6 @@ namespace Client
         /// </summary>
         private void WithdrawDepositButton_OnClick( object sender, RoutedEventArgs e )
         {
-            // TODO: Issue - when account balance is > 100 000 000 App crashes (int64 maxvalue is much higher)
             // Getting and checking selected item in GridView
             var selectedAccount = (Account)AccountGridView.SelectedItem;
             var button = sender as Button;
@@ -70,6 +69,7 @@ namespace Client
             // Establish connection with service
             var proxy = new Proxy();
 
+            // Regarding which button was pressed invoking WithdrawDeposit method with Deposit or Withdraw object 
             if ( button?.Name == DepositButton.Name )
                 result = proxy.WithdrawDepositMoney(new Deposit
                 {

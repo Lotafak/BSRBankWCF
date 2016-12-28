@@ -235,22 +235,6 @@ namespace Client.ServiceReference1 {
     [System.Runtime.Serialization.DataContractAttribute(Name="Withdraw", Namespace="http://schemas.datacontract.org/2004/07/BSRBankWCF.Models.WithdrawDepositImpl")]
     [System.SerializableAttribute()]
     public partial class Withdraw : Client.ServiceReference1.WithdrawDeposit {
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private decimal _amountField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public decimal _amount {
-            get {
-                return this._amountField;
-            }
-            set {
-                if ((this._amountField.Equals(value) != true)) {
-                    this._amountField = value;
-                    this.RaisePropertyChanged("_amount");
-                }
-            }
-        }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]

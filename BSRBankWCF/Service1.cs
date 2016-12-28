@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel;
 using BSRBankWCF.Models;
 using BSRBankWCF.Models.MessageImpl;
 using MongoDB.Driver;
 
 namespace BSRBankWCF
 {
+    [ServiceBehavior(IncludeExceptionDetailInFaults = true)]
     public class Service1 : IService1
     {
         public List<Account> GetBankAccounts(string credentials)
@@ -90,8 +92,7 @@ namespace BSRBankWCF
             var result =
                 MongoRepository.GetDatabase()
                     .GetCollection<User>(Constants.UserCollection)
-                    .UpdateOneAsync(filter, update)
-                    .Result;
+                    .UpdateOne(filter, update);
             if ( result.IsAcknowledged )
                 return new ResultMessage("Operacja zakończona sukcesem !");
 
