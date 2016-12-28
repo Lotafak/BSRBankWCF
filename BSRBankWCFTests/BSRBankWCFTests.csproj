@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="AccountUtilsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WithdrawDepositTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BSRBankWCF\BSRBankWCF.csproj">

@@ -1,6 +1,7 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
-namespace BSRBankWCF
+namespace BSRBankWCF.Models.MessageImpl
 {
     [DataContract]
     internal class ResultMessage : Message

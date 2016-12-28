@@ -62,16 +62,20 @@
   <ItemGroup>
     <Compile Include="AccountUtils.cs" />
     <Compile Include="Constants.cs" />
-    <Compile Include="Message\ErrorMessage.cs" />
+    <Compile Include="Models\MessageImpl\ErrorMessage.cs" />
     <Compile Include="Host.cs" />
     <Compile Include="IService1.cs" />
-    <Compile Include="Message.cs" />
+    <Compile Include="Models\Message.cs" />
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\Transfer.cs" />
     <Compile Include="Models\User.cs" />
-    <Compile Include="MongoRepository.cs" />
+    <Compile Include="Models\WithdrawDeposit.cs" />
+    <Compile Include="Models\WithdrawDepositImpl\Deposit.cs" />
+    <Compile Include="Models\WithdrawDepositImpl\Withdraw.cs" />
+    <Compile Include="Mongo\MongoDbDecimalSerializer.cs" />
+    <Compile Include="Mongo\MongoRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Message\ResultMessage.cs" />
+    <Compile Include="Models\MessageImpl\ResultMessage.cs" />
     <Compile Include="Service1.cs" />
   </ItemGroup>
   <ItemGroup>

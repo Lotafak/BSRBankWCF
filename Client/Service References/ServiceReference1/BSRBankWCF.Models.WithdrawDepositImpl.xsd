@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/BSRBankWCF.Models.WithdrawDepositImpl" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/BSRBankWCF.Models.WithdrawDepositImpl" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="http://schemas.datacontract.org/2004/07/BSRBankWCF.Models" />
+  <xs:complexType name="Withdraw">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q1="http://schemas.datacontract.org/2004/07/BSRBankWCF.Models" base="q1:WithdrawDeposit">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="_amount" type="xs:decimal" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Withdraw" nillable="true" type="tns:Withdraw" />
+  <xs:complexType name="Deposit">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q2="http://schemas.datacontract.org/2004/07/BSRBankWCF.Models" base="q2:WithdrawDeposit">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Deposit" nillable="true" type="tns:Deposit" />
+</xs:schema>

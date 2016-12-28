@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace BSRBankWCF
+namespace BSRBankWCF.Models.MessageImpl
 {
     [DataContract]
     public class ErrorMessage : Message

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ServiceModel;
 using BSRBankWCF.Models;
 
@@ -18,8 +17,6 @@ namespace BSRBankWCF
         Message ValidateUser(string login, string password);
 
         [OperationContract]
-        Message DepositMoney(string credentials, int amount, string accountNumber);
-        [OperationContract]
-        Message WithdrawMoney(string credentials, int amount, string accountNumber);
+        Message WithdrawDepositMoney(WithdrawDeposit withdrawDeposit);
     }
 }

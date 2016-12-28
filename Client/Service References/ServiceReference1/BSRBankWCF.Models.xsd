@@ -8,9 +8,24 @@
   <xs:element name="ArrayOfAccount" nillable="true" type="tns:ArrayOfAccount" />
   <xs:complexType name="Account">
     <xs:sequence>
-      <xs:element minOccurs="0" name="Amount" type="xs:long" />
+      <xs:element minOccurs="0" name="Amount" type="xs:decimal" />
       <xs:element minOccurs="0" name="BankAccountNumber" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Account" nillable="true" type="tns:Account" />
+  <xs:complexType name="Message">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="IsError" type="xs:boolean" />
+      <xs:element minOccurs="0" name="MessageText" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Message" nillable="true" type="tns:Message" />
+  <xs:complexType name="WithdrawDeposit">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Amount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="BankAccountNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Credentials" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WithdrawDeposit" nillable="true" type="tns:WithdrawDeposit" />
 </xs:schema>

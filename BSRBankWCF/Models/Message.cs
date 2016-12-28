@@ -1,6 +1,7 @@
 ﻿using System.Runtime.Serialization;
+using BSRBankWCF.Models.MessageImpl;
 
-namespace BSRBankWCF
+namespace BSRBankWCF.Models
 {
     [DataContract]
     [KnownType(typeof(ErrorMessage))]

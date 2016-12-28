@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
-using System.ServiceModel;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Driver;
@@ -15,9 +14,9 @@ namespace BSRBankWCF.Models
             Id = getLastIndex() + 1;
             Login = login;
             Password = password;
-            Accounts.Add(new Account()
+            Accounts.Add(new Account
             {
-                BankAccountNumber = AccountUtils.CreateAccountNumber(Constants.BankId, Id) ,
+                BankAccountNumber = AccountUtils.CreateAccountNumber(Constants.BankId, Id),
                 Amount = 0
             });
         }

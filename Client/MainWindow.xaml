@@ -3,37 +3,44 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Client"
+        xmlns:globalization="clr-namespace:System.Globalization;assembly=mscorlib"
+        xmlns:client="clr-namespace:Client"
         mc:Ignorable="d"
         Title="Zarządzanie kontem" Height="350" Width="525">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="100"/>
+            <RowDefinition Height="30" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="100" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="360"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="360" />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <ListView x:Name="accountGridView" HorizontalAlignment="Left" Height="290" Margin="10,10,0,0" VerticalAlignment="Top" Width="350" Grid.Column="0" Grid.RowSpan="6">
+        <ListView x:Name="AccountGridView" HorizontalAlignment="Left" Height="290" Margin="10,10,0,0"
+                  VerticalAlignment="Top" Width="350" Grid.Column="0" Grid.RowSpan="6">
             <ListView.View>
                 <GridView>
                     <GridView.ColumnHeaderContainerStyle>
                         <Style TargetType="{x:Type GridViewColumnHeader}">
-                            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Left" />
                         </Style>
                     </GridView.ColumnHeaderContainerStyle>
-                    <GridViewColumn Width="240" Header="Numer rachunku" DisplayMemberBinding="{Binding BankAccountNumber}"/>
-                    <GridViewColumn Width="100" Header="Stan rachunku" DisplayMemberBinding="{Binding Amount}"/>
+                    <GridViewColumn Width="240" Header="Numer rachunku"
+                                    DisplayMemberBinding="{Binding BankAccountNumber}" />
+                    <GridViewColumn Width="100" Header="Stan rachunku"
+                                    DisplayMemberBinding="{Binding Amount, StringFormat={}{0:C}, ConverterCulture={x:Static globalization:CultureInfo.CurrentCulture}}" />
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button x:Name="depositButton" Width="100" Height="30" Content="Wpłać pieniądze" Grid.Column="1" Grid.Row="1" Click="DepositButton_OnClick"/>
-        <Button x:Name="withdrawButton" Width="100" Height="30" Content="Wypłać pieniądze" Grid.Column="1" Grid.Row="2" Click="WithdrawButton_OnClick"/>
-        <ProgressBar x:Name="ProgressBar" Grid.Column="1" Grid.Row="5" Margin="5,5,5,5" Height="25" IsIndeterminate="True" Visibility="Hidden"/>
+        <Button x:Name="DepositButton" Width="100" Height="30" Content="Wpłać pieniądze" Grid.Column="1" Grid.Row="1"
+                Click="WithdrawDepositButton_OnClick" />
+        <Button x:Name="WithdrawButton" Width="100" Height="30" Content="Wypłać pieniądze" Grid.Column="1" Grid.Row="2"
+                Click="WithdrawDepositButton_OnClick" />
+        <ProgressBar x:Name="ProgressBar" Grid.Column="1" Grid.Row="5" Margin="5,5,5,5" Height="25"
+                     IsIndeterminate="True" Visibility="Hidden" />
     </Grid>
 </Window>

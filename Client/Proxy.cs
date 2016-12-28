@@ -37,24 +37,14 @@ namespace Client
             return Channel.ValidateUserAsync(login, password);
         }
 
-        public Message DepositMoney(string credentials, int amount, string accountNumber)
+        public Message WithdrawDepositMoney(WithdrawDeposit withdrawDeposit)
         {
-            return Channel.DepositMoney(credentials, amount, accountNumber);
+            return Channel.WithdrawDepositMoney(withdrawDeposit);
         }
 
-        public Task<Message> DepositMoneyAsync(string credentials, int amount, string accountNumber)
+        public Task<Message> WithdrawDepositMoneyAsync(WithdrawDeposit withdrawDeposit)
         {
-            return Channel.DepositMoneyAsync(credentials, amount, accountNumber);
-        }
-
-        public Message WithdrawMoney(string credentials, int amount, string accountNumber)
-        {
-            return Channel.WithdrawMoney(credentials, amount, accountNumber);
-        }
-
-        public Task<Message> WithdrawMoneyAsync(string credentials, int amount, string accountNumber)
-        {
-            return Channel.WithdrawMoneyAsync(credentials, amount, accountNumber);
+            return Channel.WithdrawDepositMoneyAsync(withdrawDeposit);
         }
     }
 }

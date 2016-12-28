@@ -56,8 +56,9 @@ namespace Client
         // Fires up when windows is LoginWindow is closing
         private void Window_Closing(object sender, CancelEventArgs e)
         {
-            bool wasCodeClosed =
-                new StackTrace().GetFrames().FirstOrDefault(x => x.GetMethod() == typeof(Window).GetMethod("Close")) != null;
+            var wasCodeClosed =
+                new StackTrace().GetFrames().FirstOrDefault(x => x.GetMethod() == typeof(Window).GetMethod("Close")) !=
+                null;
 
             // If window was closed by code (cancel button)
             // MainWindow object needs to be destroyed

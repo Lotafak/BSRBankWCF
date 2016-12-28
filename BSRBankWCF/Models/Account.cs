@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Runtime.Serialization;
+using BSRBankWCF.Mongo;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace BSRBankWCF.Models
 {
@@ -12,7 +9,9 @@ namespace BSRBankWCF.Models
     {
         [DataMember]
         public string BankAccountNumber { get; set; }
+
+        [BsonSerializer(typeof(MongoDbDecimalSerializer))]
         [DataMember]
-        public long Amount { get; set; }
+        public decimal Amount { get; set; }
     }
 }

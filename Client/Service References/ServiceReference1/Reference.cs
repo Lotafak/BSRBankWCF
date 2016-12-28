@@ -23,7 +23,7 @@ namespace Client.ServiceReference1 {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private long AmountField;
+        private decimal AmountField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string BankAccountNumberField;
@@ -39,7 +39,7 @@ namespace Client.ServiceReference1 {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public long Amount {
+        public decimal Amount {
             get {
                 return this.AmountField;
             }
@@ -76,7 +76,7 @@ namespace Client.ServiceReference1 {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Message", Namespace="http://schemas.datacontract.org/2004/07/BSRBankWCF")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Message", Namespace="http://schemas.datacontract.org/2004/07/BSRBankWCF.Models")]
     [System.SerializableAttribute()]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(Client.ServiceReference1.ErrorMessage))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(Client.ServiceReference1.ResultMessage))]
@@ -139,16 +139,125 @@ namespace Client.ServiceReference1 {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ErrorMessage", Namespace="http://schemas.datacontract.org/2004/07/BSRBankWCF")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ErrorMessage", Namespace="http://schemas.datacontract.org/2004/07/BSRBankWCF.Models.MessageImpl")]
     [System.SerializableAttribute()]
     public partial class ErrorMessage : Client.ServiceReference1.Message {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ResultMessage", Namespace="http://schemas.datacontract.org/2004/07/BSRBankWCF")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ResultMessage", Namespace="http://schemas.datacontract.org/2004/07/BSRBankWCF.Models.MessageImpl")]
     [System.SerializableAttribute()]
     public partial class ResultMessage : Client.ServiceReference1.Message {
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="WithdrawDeposit", Namespace="http://schemas.datacontract.org/2004/07/BSRBankWCF.Models")]
+    [System.SerializableAttribute()]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Client.ServiceReference1.Withdraw))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Client.ServiceReference1.Deposit))]
+    public partial class WithdrawDeposit : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private decimal AmountField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string BankAccountNumberField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CredentialsField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public decimal Amount {
+            get {
+                return this.AmountField;
+            }
+            set {
+                if ((this.AmountField.Equals(value) != true)) {
+                    this.AmountField = value;
+                    this.RaisePropertyChanged("Amount");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string BankAccountNumber {
+            get {
+                return this.BankAccountNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BankAccountNumberField, value) != true)) {
+                    this.BankAccountNumberField = value;
+                    this.RaisePropertyChanged("BankAccountNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Credentials {
+            get {
+                return this.CredentialsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CredentialsField, value) != true)) {
+                    this.CredentialsField = value;
+                    this.RaisePropertyChanged("Credentials");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Withdraw", Namespace="http://schemas.datacontract.org/2004/07/BSRBankWCF.Models.WithdrawDepositImpl")]
+    [System.SerializableAttribute()]
+    public partial class Withdraw : Client.ServiceReference1.WithdrawDeposit {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private decimal _amountField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public decimal _amount {
+            get {
+                return this._amountField;
+            }
+            set {
+                if ((this._amountField.Equals(value) != true)) {
+                    this._amountField = value;
+                    this.RaisePropertyChanged("_amount");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Deposit", Namespace="http://schemas.datacontract.org/2004/07/BSRBankWCF.Models.WithdrawDepositImpl")]
+    [System.SerializableAttribute()]
+    public partial class Deposit : Client.ServiceReference1.WithdrawDeposit {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -173,17 +282,11 @@ namespace Client.ServiceReference1 {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ValidateUser", ReplyAction="http://tempuri.org/IService1/ValidateUserResponse")]
         System.Threading.Tasks.Task<Client.ServiceReference1.Message> ValidateUserAsync(string login, string password);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/DepositMoney", ReplyAction="http://tempuri.org/IService1/DepositMoneyResponse")]
-        Client.ServiceReference1.Message DepositMoney(string credentials, int amount, string accountNumber);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/WithdrawDepositMoney", ReplyAction="http://tempuri.org/IService1/WithdrawDepositMoneyResponse")]
+        Client.ServiceReference1.Message WithdrawDepositMoney(Client.ServiceReference1.WithdrawDeposit withdrawDeposit);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/DepositMoney", ReplyAction="http://tempuri.org/IService1/DepositMoneyResponse")]
-        System.Threading.Tasks.Task<Client.ServiceReference1.Message> DepositMoneyAsync(string credentials, int amount, string accountNumber);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/WithdrawMoney", ReplyAction="http://tempuri.org/IService1/WithdrawMoneyResponse")]
-        Client.ServiceReference1.Message WithdrawMoney(string credentials, int amount, string accountNumber);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/WithdrawMoney", ReplyAction="http://tempuri.org/IService1/WithdrawMoneyResponse")]
-        System.Threading.Tasks.Task<Client.ServiceReference1.Message> WithdrawMoneyAsync(string credentials, int amount, string accountNumber);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/WithdrawDepositMoney", ReplyAction="http://tempuri.org/IService1/WithdrawDepositMoneyResponse")]
+        System.Threading.Tasks.Task<Client.ServiceReference1.Message> WithdrawDepositMoneyAsync(Client.ServiceReference1.WithdrawDeposit withdrawDeposit);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -237,20 +340,12 @@ namespace Client.ServiceReference1 {
             return base.Channel.ValidateUserAsync(login, password);
         }
         
-        public Client.ServiceReference1.Message DepositMoney(string credentials, int amount, string accountNumber) {
-            return base.Channel.DepositMoney(credentials, amount, accountNumber);
+        public Client.ServiceReference1.Message WithdrawDepositMoney(Client.ServiceReference1.WithdrawDeposit withdrawDeposit) {
+            return base.Channel.WithdrawDepositMoney(withdrawDeposit);
         }
         
-        public System.Threading.Tasks.Task<Client.ServiceReference1.Message> DepositMoneyAsync(string credentials, int amount, string accountNumber) {
-            return base.Channel.DepositMoneyAsync(credentials, amount, accountNumber);
-        }
-        
-        public Client.ServiceReference1.Message WithdrawMoney(string credentials, int amount, string accountNumber) {
-            return base.Channel.WithdrawMoney(credentials, amount, accountNumber);
-        }
-        
-        public System.Threading.Tasks.Task<Client.ServiceReference1.Message> WithdrawMoneyAsync(string credentials, int amount, string accountNumber) {
-            return base.Channel.WithdrawMoneyAsync(credentials, amount, accountNumber);
+        public System.Threading.Tasks.Task<Client.ServiceReference1.Message> WithdrawDepositMoneyAsync(Client.ServiceReference1.WithdrawDeposit withdrawDeposit) {
+            return base.Channel.WithdrawDepositMoneyAsync(withdrawDeposit);
         }
     }
 }
