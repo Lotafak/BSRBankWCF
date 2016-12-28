@@ -10,6 +10,13 @@ namespace Client
     /// </summary>
     public partial class MainWindow : Window
     {
+        /// <summary>
+        ///     Keeps Base64 encrypted credentials within MainWindow Context
+        /// </summary>
+        public static string Credentials { get; private set; }
+
+        private MainPage gridViewPage;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -18,19 +25,14 @@ namespace Client
         }
 
         /// <summary>
-        ///     Keeps Base64 encrypted credentials within MainWindow Context
-        /// </summary>
-        public static string Credentials { get; private set; }
-
-        /// <summary>
         ///     Handles succesful login callback
         /// </summary>
         /// <param name="e">Contains information about credentials (login, password)></param>
         public void loginWindow_LoginSuccesful( object sender, LoginWindowEventArgs e )
         {
-            var proxy = new Proxy();
             Credentials = ClientUtils.Base64Encode($"{e.Username}:{e.Password}");
-            AccountGridView.ItemsSource = proxy.GetBankAccounts(Credentials);
+            gridViewPage = new MainPage();
+            Main.Content = gridViewPage;
         }
 
         /// <summary>
@@ -39,7 +41,7 @@ namespace Client
         private void WithdrawDepositButton_OnClick( object sender, RoutedEventArgs e )
         {
             // Getting and checking selected item in GridView
-            var selectedAccount = (Account)AccountGridView.SelectedItem;
+            var selectedAccount = gridViewPage.GetSelectedItem();
             var button = sender as Button;
             Message result = null;
 
@@ -55,8 +57,8 @@ namespace Client
 
             // It is possible that user enters wrong data
             decimal amount;
-            var parse = decimal.TryParse(input.Replace('.',','), out amount);
-            if ( !parse || amount > long.MaxValue || amount <= 0)
+            var parse = decimal.TryParse(input.Replace('.', ','), out amount);
+            if ( !parse || amount > long.MaxValue || amount <= 0 )
             {
                 // If they do, show message and do nothing.
                 ClientUtils.ShowMessage(new ErrorMessage { IsError = true, MessageText = "Podano błędną kwotę !" });
@@ -89,12 +91,33 @@ namespace Client
             }
 
             // Refresh GridView
-            AccountGridView.ItemsSource = proxy.GetBankAccounts(Credentials);
-            AccountGridView.Items.Refresh();
+            gridViewPage.RefreshGridview();
 
             // Program stopped working
             ProgressBar.Visibility = Visibility.Hidden;
             ClientUtils.ShowMessage(result);
+
+            Main.Content = gridViewPage;
+        }
+
+        private void ExternalTransfer_OnClick(object sender, RoutedEventArgs e)
+        {
+            // Getting and checking selected item in GridView
+            var selectedAccount = gridViewPage.GetSelectedItem();
+            var button = sender as Button;
+            Message result = null;
+
+            // When no item is selected in GridView do nothing
+            if ( selectedAccount == null )
+            {
+                ClientUtils.ShowMessage(new ErrorMessage { IsError = true, MessageText = "Proszę wybrać konto źródłowe" });
+                return;
+            }
+        }
+
+        private void InternalTransfer_OnClick(object sender, RoutedEventArgs e)
+        {
+            // TODO: Both external and internal transfers
         }
     }
 }

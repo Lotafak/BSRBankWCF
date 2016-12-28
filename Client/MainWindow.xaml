@@ -20,27 +20,16 @@
             <ColumnDefinition Width="360" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <ListView x:Name="AccountGridView" HorizontalAlignment="Left" Height="290" Margin="10,10,0,0"
-                  VerticalAlignment="Top" Width="350" Grid.Column="0" Grid.RowSpan="6">
-            <ListView.View>
-                <GridView>
-                    <GridView.ColumnHeaderContainerStyle>
-                        <Style TargetType="{x:Type GridViewColumnHeader}">
-                            <Setter Property="HorizontalContentAlignment" Value="Left" />
-                        </Style>
-                    </GridView.ColumnHeaderContainerStyle>
-                    <GridViewColumn Width="240" Header="Numer rachunku"
-                                    DisplayMemberBinding="{Binding BankAccountNumber}" />
-                    <GridViewColumn Width="100" Header="Stan rachunku"
-                                    DisplayMemberBinding="{Binding Amount, StringFormat={}{0:C}, ConverterCulture={x:Static globalization:CultureInfo.CurrentCulture}}" />
-                </GridView>
-            </ListView.View>
-        </ListView>
-        <Button x:Name="DepositButton" Width="100" Height="30" Content="Wpłać pieniądze" Grid.Column="1" Grid.Row="1"
+        <Button x:Name="DepositButton" Width="120" Height="30" Content="Wpłać pieniądze" Grid.Column="1" Grid.Row="1"
                 Click="WithdrawDepositButton_OnClick" />
-        <Button x:Name="WithdrawButton" Width="100" Height="30" Content="Wypłać pieniądze" Grid.Column="1" Grid.Row="2"
+        <Button x:Name="WithdrawButton" Width="120" Height="30" Content="Wypłać pieniądze" Grid.Column="1" Grid.Row="2"
                 Click="WithdrawDepositButton_OnClick" />
+        <Button x:Name="ExternalTransfer" Width="120" Height="30" Content="Przelew zewnętrzny" Grid.Column="1" Grid.Row="3"
+                Click="ExternalTransfer_OnClick" />
+        <Button x:Name="InternalTransfer" Width="120" Height="30" Content="Przelew wewnętrzny" Grid.Column="1" Grid.Row="4"
+                Click="InternalTransfer_OnClick" />
         <ProgressBar x:Name="ProgressBar" Grid.Column="1" Grid.Row="5" Margin="5,5,5,5" Height="25"
                      IsIndeterminate="True" Visibility="Hidden" />
+        <Frame x:Name="Main" Grid.Column="0" Grid.RowSpan="6" NavigationUIVisibility="Hidden"/>
     </Grid>
 </Window>
