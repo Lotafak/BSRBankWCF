@@ -1,24 +1,27 @@
 ﻿using System;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Linq;
 using System.Windows;
-using Client.ServiceReference1;
 
 namespace Client
 {
     /// <summary>
-    /// Interaction logic for Window1.xaml
+    ///     Interaction logic for Window1.xaml
     /// </summary>
     public partial class LoginWindow : Window
     {
         private readonly MainWindow _mainWindow = new MainWindow();
-        public event EventHandler<LoginWindowEventArgs> DialogFinished;
-        
+
         public LoginWindow()
         {
             InitializeComponent();
             DialogFinished += _mainWindow.loginWindow_LoginSuccesful;
         }
 
-        private void regiser_button_OnClick( object sender, RoutedEventArgs e )
+        public event EventHandler<LoginWindowEventArgs> DialogFinished;
+
+        private void regiser_button_OnClick(object sender, RoutedEventArgs e)
         {
             var password = password_passwordBox.Password;
             var login = login_textBox.Text;
@@ -37,27 +40,29 @@ namespace Client
 
                 password_passwordBox.Password = "";
                 login_textBox.Text = "";
-            } 
+            }
             else if (login_textBox.Text == "")
                 MessageBox.Show(Properties.Resources.LackOfLoginMessageBoxText);
-            else if(password_passwordBox.Password == "")
+            else if (password_passwordBox.Password == "")
                 MessageBox.Show(Properties.Resources.LackOfPasswordMessageBoxText);
         }
 
-        private void cancel_button_OnClick( object sender, RoutedEventArgs e )
+        private void cancel_button_OnClick(object sender, RoutedEventArgs e)
         {
-            // MainWindow object also needs to be destroyed
             _mainWindow.Close();
-
             Close();
         }
 
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        // Fires up when windows is LoginWindow is closing
+        private void Window_Closing(object sender, CancelEventArgs e)
         {
-            // MainWindow object needs to be destroyed
-            //_mainWindow.Close();
+            bool wasCodeClosed =
+                new StackTrace().GetFrames().FirstOrDefault(x => x.GetMethod() == typeof(Window).GetMethod("Close")) != null;
 
-            // TODO: Close main window only when exiting on purpose, not closing the loginWindow 
+            // If window was closed by code (cancel button)
+            // MainWindow object needs to be destroyed
+            if (!wasCodeClosed)
+                _mainWindow.Close();
         }
 
         private void Login_button_OnClick(object sender, RoutedEventArgs e)
@@ -80,11 +85,11 @@ namespace Client
                 DialogFinished?.Invoke(this,
                     new LoginWindowEventArgs(password, login));
                 _mainWindow.Show();
-                //Close();
+                Close();
             }
-            else if ( login_textBox.Text == "" )
+            else if (login_textBox.Text == "")
                 MessageBox.Show(Properties.Resources.LackOfLoginMessageBoxText);
-            else if ( password_passwordBox.Password == "" )
+            else if (password_passwordBox.Password == "")
                 MessageBox.Show(Properties.Resources.LackOfPasswordMessageBoxText);
         }
     }

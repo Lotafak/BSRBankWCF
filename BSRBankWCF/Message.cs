@@ -9,7 +9,7 @@ namespace BSRBankWCF
     {
         [DataMember]
         public string MessageText { get; set; }
-        
+
         [DataMember]
         public abstract bool IsError { get; set; }
     }

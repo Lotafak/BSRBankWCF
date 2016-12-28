@@ -8,11 +8,11 @@
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/BSRBankWCF" />
     </xsd:schema>
   </wsdl:types>
-  <wsdl:message name="IService1_GetBankAccountNumber_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetBankAccountNumber" />
+  <wsdl:message name="IService1_GetBankAccounts_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetBankAccounts" />
   </wsdl:message>
-  <wsdl:message name="IService1_GetBankAccountNumber_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetBankAccountNumberResponse" />
+  <wsdl:message name="IService1_GetBankAccounts_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetBankAccountsResponse" />
   </wsdl:message>
   <wsdl:message name="IService1_AddUser_InputMessage">
     <wsdl:part name="parameters" element="tns:AddUser" />
@@ -27,9 +27,9 @@
     <wsdl:part name="parameters" element="tns:ValidateUserResponse" />
   </wsdl:message>
   <wsdl:portType name="IService1">
-    <wsdl:operation name="GetBankAccountNumber">
-      <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetBankAccountNumber" message="tns:IService1_GetBankAccountNumber_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IService1/GetBankAccountNumberResponse" message="tns:IService1_GetBankAccountNumber_OutputMessage" />
+    <wsdl:operation name="GetBankAccounts">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetBankAccounts" message="tns:IService1_GetBankAccounts_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/GetBankAccountsResponse" message="tns:IService1_GetBankAccounts_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="AddUser">
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/AddUser" message="tns:IService1_AddUser_InputMessage" />
@@ -42,8 +42,8 @@
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IService1" type="tns:IService1">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <wsdl:operation name="GetBankAccountNumber">
-      <soap:operation soapAction="http://tempuri.org/IService1/GetBankAccountNumber" style="document" />
+    <wsdl:operation name="GetBankAccounts">
+      <soap:operation soapAction="http://tempuri.org/IService1/GetBankAccounts" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

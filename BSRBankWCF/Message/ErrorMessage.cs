@@ -5,7 +5,9 @@ namespace BSRBankWCF
     [DataContract]
     public class ErrorMessage : Message
     {
-        public ErrorMessage() { }
+        public ErrorMessage()
+        {
+        }
 
         public ErrorMessage(string message)
         {

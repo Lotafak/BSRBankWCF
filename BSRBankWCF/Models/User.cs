@@ -1,4 +1,6 @@
-﻿using System.Runtime.Serialization;
+﻿using System.Collections.Generic;
+using System.Runtime.Serialization;
+using System.ServiceModel;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Driver;
@@ -13,8 +15,11 @@ namespace BSRBankWCF.Models
             Id = getLastIndex() + 1;
             Login = login;
             Password = password;
-            Amount = 0;
-            BankAccountNumber = AccountUtils.CreateAccountNumber(Constants.BankId, Id);
+            Accounts.Add(new Account()
+            {
+                BankAccountNumber = AccountUtils.CreateAccountNumber(Constants.BankId, Id) ,
+                Amount = 0
+            });
         }
 
         [BsonId]
@@ -22,19 +27,16 @@ namespace BSRBankWCF.Models
 
         [DataMember]
         public string Login { get; set; }
-        
+
         [DataMember]
         public string Password { get; set; }
 
         [DataMember]
-        public decimal Amount { get; set; }
-
-        [DataMember]
-        public string BankAccountNumber { get; set; }
+        public List<Account> Accounts { get; set; } = new List<Account>();
 
         private int getLastIndex()
         {
-            var user =  MongoRepository.GetDatabase().GetCollection<User>(Constants.UserCollection)
+            var user = MongoRepository.GetDatabase().GetCollection<User>(Constants.UserCollection)
                 .Find(new BsonDocument())
                 .Sort(new BsonDocument("_id", -1))
                 .FirstOrDefault();

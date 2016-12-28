@@ -4,23 +4,23 @@ namespace BSRBankWCF
 {
     public class AccountUtils
     {
-        public static bool ValidateAccountNumber( string acc )
+        public static bool ValidateAccountNumber(string acc)
         {
-            if ( acc.Length != 26 ) return false;
+            if (acc.Length != 26) return false;
             var check = acc.Substring(2) + acc.Substring(0, 2);
             var intarr = new string[4];
             check = check.TrimStart('0');
-            for ( var i = 0; i < intarr.Length; i++ )
+            for (var i = 0; i < intarr.Length; i++)
             {
-                if ( i * 6 + 6 < check.Length )
-                    intarr[i] = check.Substring(i * 6, 6);
+                if (i*6 + 6 < check.Length)
+                    intarr[i] = check.Substring(i*6, 6);
                 else
-                    intarr[i] = check.Substring(i * 6);
+                    intarr[i] = check.Substring(i*6);
             }
-            for ( var i = 0; i < intarr.Length; i++ )
+            for (var i = 0; i < intarr.Length; i++)
             {
-                var mod = int.Parse(intarr[i]) % 97;
-                if ( i >= intarr.Length - 1 )
+                var mod = int.Parse(intarr[i])%97;
+                if (i >= intarr.Length - 1)
                 {
                     return mod == 1;
                 }
@@ -31,24 +31,24 @@ namespace BSRBankWCF
             return false;
         }
 
-        public static string CreateAccountNumber( string bankId, int id )
+        public static string CreateAccountNumber(string bankId, int id)
         {
-            if ( bankId.Length != 8 ) return "";
+            if (bankId.Length != 8) return "";
 
             var accountIdWithZeros = CreateAccountId(id);
             var check = bankId + accountIdWithZeros + "00";
             var intarr = new string[4];
             check = check.TrimStart('0');
-            for ( var i = 0; i < intarr.Length; i++ )
+            for (var i = 0; i < intarr.Length; i++)
             {
-                if ( i * 6 + 6 < check.Length )
-                    intarr[i] = check.Substring(i * 6, 6);
+                if (i*6 + 6 < check.Length)
+                    intarr[i] = check.Substring(i*6, 6);
                 else
-                    intarr[i] = check.Substring(i * 6);
+                    intarr[i] = check.Substring(i*6);
             }
-            for ( var i = 0; i < intarr.Length; i++ )
+            for (var i = 0; i < intarr.Length; i++)
             {
-                var mod = int.Parse(intarr[i]) % 97;
+                var mod = int.Parse(intarr[i])%97;
                 if (i >= intarr.Length - 1)
                 {
                     var chksum = 98 - mod;
@@ -63,7 +63,6 @@ namespace BSRBankWCF
                 intarr[i + 1] = nextString;
             }
             return "";
-
         }
 
         public static string CreateAccountId(int id)
@@ -73,6 +72,23 @@ namespace BSRBankWCF
                 sb.Append(0);
             sb.Append(id);
             return sb.ToString();
+        }
+
+        public static string Base64Encode( string plainText )
+        {
+            var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
+            return System.Convert.ToBase64String(plainTextBytes);
+        }
+
+        public static string Base64Decode( string base64EncodedData )
+        {
+            var base64EncodedBytes = System.Convert.FromBase64String(base64EncodedData);
+            return System.Text.Encoding.UTF8.GetString(base64EncodedBytes);
+        }
+
+        public static string LoginFromCredentials(string credentials)
+        {
+            return Base64Decode(credentials).Split(':')[0];
         }
     }
 }

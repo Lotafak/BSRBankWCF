@@ -5,6 +5,34 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Client"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid/>
+        Title="Zarządzanie kontem" Height="350" Width="525">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="100"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="360"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <ListView x:Name="accountGridView" HorizontalAlignment="Left" Height="290" Margin="10,10,0,0" VerticalAlignment="Top" Width="350" Grid.Column="0" Grid.RowSpan="6">
+            <ListView.View>
+                <GridView>
+                    <GridView.ColumnHeaderContainerStyle>
+                        <Style TargetType="{x:Type GridViewColumnHeader}">
+                            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                        </Style>
+                    </GridView.ColumnHeaderContainerStyle>
+                    <GridViewColumn Width="240" Header="Numer rachunku" DisplayMemberBinding="{Binding BankAccountNumber}"/>
+                    <GridViewColumn Width="100" Header="Stan rachunku" DisplayMemberBinding="{Binding Amount}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button x:Name="depositButton" Width="100" Height="30" Content="Wpłać pieniądze" Grid.Column="1" Grid.Row="1" Click="DepositButton_OnClick"></Button>
+        <Button x:Name="xd" Width="100" Height="30" Content="Wpłać pieniądze" Grid.Column="1" Grid.Row="2"></Button>
+    </Grid>
 </Window>

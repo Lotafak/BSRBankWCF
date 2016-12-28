@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Runtime.Serialization;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace BSRBankWCF.Models
 {
     [DataContract]
-    class Transfer
+    internal class Transfer
     {
         [BsonId]
-        public ObjectId Id{ get; set; }
+        public ObjectId Id { get; set; }
 
         [DataMember]
         public int Amount { get; set; }

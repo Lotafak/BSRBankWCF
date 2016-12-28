@@ -1,42 +1,55 @@
-﻿using BSRBankWCF.Models;
+﻿using System;
+using System.Collections.Generic;
+using BSRBankWCF.Models;
 using MongoDB.Driver;
 
 namespace BSRBankWCF
 {
     public class Service1 : IService1
     {
-        public Message GetBankAccountNumber( User user )
+        public List<Account> GetBankAccounts(string credentials)
         {
-            var usr = MongoRepository.GetDatabase().GetCollection<User>(Constants.UserCollection)
-                .Find(Builders<User>.Filter.Eq("name", user.Login))
-                .FirstOrDefault();
-            return usr != null ? (Message) new ResultMessage(usr.BankAccountNumber) : new ErrorMessage("No user in database !");
+            return MongoRepository.GetDatabase().GetCollection<User>(Constants.UserCollection)
+                .Find(Builders<User>.Filter.Eq("name", AccountUtils.LoginFromCredentials(credentials))).First().Accounts;
+            // TODO: Exception thrown ("x:x" string). Dunno why. Gotta check this out.
         }
 
-        public Message AddUser( string login, string password )
+        public Message AddUser(string login, string password)
         {
-            if ( login == "" || password == "") return new ErrorMessage("Pola(e) nie wypełnione poprawnie !");
+            if (login == "" || password == "") return new ErrorMessage("Pola(e) nie wypełnione poprawnie !");
 
             var user = new User(login, password);
+            User usr;
 
-            var usr = MongoRepository.GetDatabase().GetCollection<User>(Constants.UserCollection)
-                .Find(Builders<User>.Filter.Eq("Login", login))
-                .FirstOrDefault();
-            if(usr == null)
+            try
+            {
+                usr = MongoRepository.GetDatabase().GetCollection<User>(Constants.UserCollection)
+                    .Find(Builders<User>.Filter.Eq("Login", login))
+                    .FirstOrDefault();
+            }
+            catch (MongoExecutionTimeoutException ex)
+            {
+                return new ErrorMessage($"Przekroczono limit czasu przetwarzania zapytania ! \n{ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                return new ErrorMessage(ex.Message);
+            }
+            if (usr == null)
                 MongoRepository.GetDatabase().GetCollection<User>(Constants.UserCollection).InsertOneAsync(user);
             else
                 return new ErrorMessage($"Użytkownik o loginie: \"{login}\" już istenieje !");
             return new ResultMessage($"Utworzono użytkownika \"{login}\"\nProszę się zalogować");
         }
 
-        public Message ValidateUser( string login, string password )
+        public Message ValidateUser(string login, string password)
         {
             var usr = MongoRepository.GetDatabase().GetCollection<User>(Constants.UserCollection)
                 .Find(Builders<User>.Filter.Eq("Login", login))
                 .FirstOrDefault();
-            if ( usr == null )
+            if (usr == null)
                 return new ErrorMessage("Brak podanego użytkownika");
-            if ( usr.Password != password )
+            if (usr.Password != password)
                 return new ErrorMessage("Błędne hasło");
 
             return new ResultMessage("Użytkownik zalogowany poprawnie");

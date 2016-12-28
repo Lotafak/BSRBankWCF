@@ -15,24 +15,18 @@ namespace Client.ServiceReference1 {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="User", Namespace="http://schemas.datacontract.org/2004/07/BSRBankWCF.Models")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Account", Namespace="http://schemas.datacontract.org/2004/07/BSRBankWCF.Models")]
     [System.SerializableAttribute()]
-    public partial class User : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    public partial class Account : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private decimal AmountField;
+        private long AmountField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string BankAccountNumberField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string LoginField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string PasswordField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -45,7 +39,7 @@ namespace Client.ServiceReference1 {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public decimal Amount {
+        public long Amount {
             get {
                 return this.AmountField;
             }
@@ -66,32 +60,6 @@ namespace Client.ServiceReference1 {
                 if ((object.ReferenceEquals(this.BankAccountNumberField, value) != true)) {
                     this.BankAccountNumberField = value;
                     this.RaisePropertyChanged("BankAccountNumber");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Login {
-            get {
-                return this.LoginField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.LoginField, value) != true)) {
-                    this.LoginField = value;
-                    this.RaisePropertyChanged("Login");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Password {
-            get {
-                return this.PasswordField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.PasswordField, value) != true)) {
-                    this.PasswordField = value;
-                    this.RaisePropertyChanged("Password");
                 }
             }
         }
@@ -187,11 +155,11 @@ namespace Client.ServiceReference1 {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServiceReference1.IService1")]
     public interface IService1 {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetBankAccountNumber", ReplyAction="http://tempuri.org/IService1/GetBankAccountNumberResponse")]
-        Client.ServiceReference1.Message GetBankAccountNumber(Client.ServiceReference1.User user);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetBankAccounts", ReplyAction="http://tempuri.org/IService1/GetBankAccountsResponse")]
+        System.Collections.Generic.List<Client.ServiceReference1.Account> GetBankAccounts(string credentials);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetBankAccountNumber", ReplyAction="http://tempuri.org/IService1/GetBankAccountNumberResponse")]
-        System.Threading.Tasks.Task<Client.ServiceReference1.Message> GetBankAccountNumberAsync(Client.ServiceReference1.User user);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetBankAccounts", ReplyAction="http://tempuri.org/IService1/GetBankAccountsResponse")]
+        System.Threading.Tasks.Task<System.Collections.Generic.List<Client.ServiceReference1.Account>> GetBankAccountsAsync(string credentials);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/AddUser", ReplyAction="http://tempuri.org/IService1/AddUserResponse")]
         Client.ServiceReference1.Message AddUser(string login, string password);
@@ -233,12 +201,12 @@ namespace Client.ServiceReference1 {
                 base(binding, remoteAddress) {
         }
         
-        public Client.ServiceReference1.Message GetBankAccountNumber(Client.ServiceReference1.User user) {
-            return base.Channel.GetBankAccountNumber(user);
+        public System.Collections.Generic.List<Client.ServiceReference1.Account> GetBankAccounts(string credentials) {
+            return base.Channel.GetBankAccounts(credentials);
         }
         
-        public System.Threading.Tasks.Task<Client.ServiceReference1.Message> GetBankAccountNumberAsync(Client.ServiceReference1.User user) {
-            return base.Channel.GetBankAccountNumberAsync(user);
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<Client.ServiceReference1.Account>> GetBankAccountsAsync(string credentials) {
+            return base.Channel.GetBankAccountsAsync(credentials);
         }
         
         public Client.ServiceReference1.Message AddUser(string login, string password) {

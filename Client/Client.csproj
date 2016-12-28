@@ -103,6 +103,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Properties\DataSources\BSRBankWCF.Message.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -113,6 +114,9 @@
     </None>
     <None Include="Service References\ServiceReference1\BSRBankWCF.xsd">
       <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ServiceReference1\Client.ServiceReference1.Account.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\ServiceReference1\Client.ServiceReference1.Message.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>

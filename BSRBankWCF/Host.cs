@@ -3,13 +3,13 @@ using System.ServiceModel;
 
 namespace BSRBankWCF
 {
-    class Host
+    internal class Host
     {
-        static void Main(String[] args)
+        private static void Main(string[] args)
         {
             try
             {
-                ServiceHost host = new ServiceHost(typeof(Service1));
+                var host = new ServiceHost(typeof(Service1));
                 host.Open();
                 Console.WriteLine("Host running, press any key to exit. . .");
                 Console.ReadKey();

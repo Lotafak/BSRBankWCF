@@ -1,4 +1,6 @@
-﻿using System.ServiceModel;
+﻿using System;
+using System.Collections.Generic;
+using System.ServiceModel;
 using BSRBankWCF.Models;
 
 namespace BSRBankWCF
@@ -6,9 +8,8 @@ namespace BSRBankWCF
     [ServiceContract]
     public interface IService1
     {
-
         [OperationContract]
-        Message GetBankAccountNumber( User user );
+        List<Account> GetBankAccounts(string credentials);
 
         [OperationContract]
         Message AddUser(string login, string password);

@@ -1,12 +1,13 @@
-﻿using System;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 
 namespace BSRBankWCF
 {
     [DataContract]
-    class ResultMessage : Message
+    internal class ResultMessage : Message
     {
-        public ResultMessage() { }
+        public ResultMessage()
+        {
+        }
 
         public ResultMessage(string message)
         {
