@@ -16,5 +16,10 @@ namespace BSRBankWCF
 
         [OperationContract]
         Message ValidateUser(string login, string password);
+
+        [OperationContract]
+        Message DepositMoney(string credentials, int amount, string accountNumber);
+        [OperationContract]
+        Message WithdrawMoney(string credentials, int amount, string accountNumber);
     }
 }

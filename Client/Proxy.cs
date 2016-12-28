@@ -36,5 +36,25 @@ namespace Client
         {
             return Channel.ValidateUserAsync(login, password);
         }
+
+        public Message DepositMoney(string credentials, int amount, string accountNumber)
+        {
+            return Channel.DepositMoney(credentials, amount, accountNumber);
+        }
+
+        public Task<Message> DepositMoneyAsync(string credentials, int amount, string accountNumber)
+        {
+            return Channel.DepositMoneyAsync(credentials, amount, accountNumber);
+        }
+
+        public Message WithdrawMoney(string credentials, int amount, string accountNumber)
+        {
+            return Channel.WithdrawMoney(credentials, amount, accountNumber);
+        }
+
+        public Task<Message> WithdrawMoneyAsync(string credentials, int amount, string accountNumber)
+        {
+            return Channel.WithdrawMoneyAsync(credentials, amount, accountNumber);
+        }
     }
 }

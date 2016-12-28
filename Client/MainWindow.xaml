@@ -32,7 +32,8 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button x:Name="depositButton" Width="100" Height="30" Content="Wpłać pieniądze" Grid.Column="1" Grid.Row="1" Click="DepositButton_OnClick"></Button>
-        <Button x:Name="xd" Width="100" Height="30" Content="Wpłać pieniądze" Grid.Column="1" Grid.Row="2"></Button>
+        <Button x:Name="depositButton" Width="100" Height="30" Content="Wpłać pieniądze" Grid.Column="1" Grid.Row="1" Click="DepositButton_OnClick"/>
+        <Button x:Name="withdrawButton" Width="100" Height="30" Content="Wypłać pieniądze" Grid.Column="1" Grid.Row="2" Click="WithdrawButton_OnClick"/>
+        <ProgressBar x:Name="ProgressBar" Grid.Column="1" Grid.Row="5" Margin="5,5,5,5" Height="25" IsIndeterminate="True" Visibility="Hidden"/>
     </Grid>
 </Window>

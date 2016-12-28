@@ -46,4 +46,36 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="DepositMoney">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="credentials" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="amount" type="xs:int" />
+        <xs:element minOccurs="0" name="accountNumber" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DepositMoneyResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/BSRBankWCF" minOccurs="0" name="DepositMoneyResult" nillable="true" type="q4:Message" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="WithdrawMoney">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="credentials" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="amount" type="xs:int" />
+        <xs:element minOccurs="0" name="accountNumber" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="WithdrawMoneyResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/BSRBankWCF" minOccurs="0" name="WithdrawMoneyResult" nillable="true" type="q5:Message" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

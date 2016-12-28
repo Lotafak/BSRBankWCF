@@ -9,17 +9,22 @@ namespace Client
     /// </summary>
     public partial class MainWindow : Window
     {
+        /// <summary>
+        /// Keeps Base64 encrypted credentials within MainWindow Context
+        /// </summary>
         public static string Credentials { get; private set; }
 
         public MainWindow()
         {
             InitializeComponent();
 
-            //accountGridView.ItemsSource = new List<Account> { new Account { Amount = 5000, BankAccountNumber = "12382163810"}, new Account { Amount = 2000, BankAccountNumber = "123615236"} };
-
             var proxy = new Proxy();
         }
 
+        /// <summary>
+        /// Handles succesful login callback
+        /// </summary>
+        /// <param name="e">Contains information about credentials (login, password)></param>
         public void loginWindow_LoginSuccesful(object sender, LoginWindowEventArgs e)
         {
             var proxy = new Proxy();
@@ -27,16 +32,57 @@ namespace Client
             accountGridView.ItemsSource = proxy.GetBankAccounts(Credentials);
         }
 
-        private void login_button_Copy_Click(object sender, RoutedEventArgs e)
-        {
-            var loginWindow = new LoginWindow();
-            loginWindow.DialogFinished += loginWindow_LoginSuccesful;
-            loginWindow.Show();
-        }
-
+        ///<summary>
+        /// Deposit button handler
+        /// </summary> 
         private void DepositButton_OnClick(object sender, RoutedEventArgs e)
         {
-            //var (User) accountGridView.SelectedItem;
+            // Getting and checking selected item in GridView
+            var x = (Account)accountGridView.SelectedItem;
+
+            // When no item is selected in GridView do nothing
+            if (x == null)
+                return;
+
+            ProgressBar.Visibility = Visibility.Visible;
+
+            // Establish connection with service
+            var proxy = new Proxy();
+            var result = proxy.DepositMoney(Credentials, 2, x.BankAccountNumber);
+
+            // Refresh GridView
+            accountGridView.ItemsSource = proxy.GetBankAccounts(Credentials);
+            accountGridView.Items.Refresh();
+
+            ProgressBar.Visibility = Visibility.Hidden;
+            ClientUtils.ShowMessage(result);
+        }
+
+        ///<summary>
+        /// Withdraw button handler
+        /// </summary> 
+        private void WithdrawButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            // Getting and checking selected item in GridView
+            var selectedAccount = (Account)accountGridView.SelectedItem;
+
+            // When no item is selected in GridView do nothing
+            if ( selectedAccount == null )
+                return;
+
+            ProgressBar.Visibility = Visibility.Visible;
+
+            // Establish connection with service
+            var proxy = new Proxy();
+            var result = proxy.WithdrawMoney(Credentials, 2, selectedAccount.BankAccountNumber);
+
+            // Refresh GridView
+            //accountGridView.ItemsSource = null;
+            accountGridView.ItemsSource = proxy.GetBankAccounts(Credentials);
+            accountGridView.Items.Refresh();
+
+            ProgressBar.Visibility = Visibility.Hidden;
+            ClientUtils.ShowMessage(result);
         }
     }
 }

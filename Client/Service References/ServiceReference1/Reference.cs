@@ -172,6 +172,18 @@ namespace Client.ServiceReference1 {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ValidateUser", ReplyAction="http://tempuri.org/IService1/ValidateUserResponse")]
         System.Threading.Tasks.Task<Client.ServiceReference1.Message> ValidateUserAsync(string login, string password);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/DepositMoney", ReplyAction="http://tempuri.org/IService1/DepositMoneyResponse")]
+        Client.ServiceReference1.Message DepositMoney(string credentials, int amount, string accountNumber);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/DepositMoney", ReplyAction="http://tempuri.org/IService1/DepositMoneyResponse")]
+        System.Threading.Tasks.Task<Client.ServiceReference1.Message> DepositMoneyAsync(string credentials, int amount, string accountNumber);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/WithdrawMoney", ReplyAction="http://tempuri.org/IService1/WithdrawMoneyResponse")]
+        Client.ServiceReference1.Message WithdrawMoney(string credentials, int amount, string accountNumber);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/WithdrawMoney", ReplyAction="http://tempuri.org/IService1/WithdrawMoneyResponse")]
+        System.Threading.Tasks.Task<Client.ServiceReference1.Message> WithdrawMoneyAsync(string credentials, int amount, string accountNumber);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -223,6 +235,22 @@ namespace Client.ServiceReference1 {
         
         public System.Threading.Tasks.Task<Client.ServiceReference1.Message> ValidateUserAsync(string login, string password) {
             return base.Channel.ValidateUserAsync(login, password);
+        }
+        
+        public Client.ServiceReference1.Message DepositMoney(string credentials, int amount, string accountNumber) {
+            return base.Channel.DepositMoney(credentials, amount, accountNumber);
+        }
+        
+        public System.Threading.Tasks.Task<Client.ServiceReference1.Message> DepositMoneyAsync(string credentials, int amount, string accountNumber) {
+            return base.Channel.DepositMoneyAsync(credentials, amount, accountNumber);
+        }
+        
+        public Client.ServiceReference1.Message WithdrawMoney(string credentials, int amount, string accountNumber) {
+            return base.Channel.WithdrawMoney(credentials, amount, accountNumber);
+        }
+        
+        public System.Threading.Tasks.Task<Client.ServiceReference1.Message> WithdrawMoneyAsync(string credentials, int amount, string accountNumber) {
+            return base.Channel.WithdrawMoneyAsync(credentials, amount, accountNumber);
         }
     }
 }
