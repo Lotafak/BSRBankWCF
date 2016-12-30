@@ -79,20 +79,11 @@ namespace Client.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Uzupełnij pole &quot;Login&quot;.
+        ///   Looks up a localized string similar to Błędny login i/lub hasło.
         /// </summary>
-        internal static string LackOfLoginMessageBoxText {
+        internal static string WrongLoginParameters {
             get {
-                return ResourceManager.GetString("LackOfLoginMessageBoxText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Uzupełnij pole &quot;Hasło&quot;.
-        /// </summary>
-        internal static string LackOfPasswordMessageBoxText {
-            get {
-                return ResourceManager.GetString("LackOfPasswordMessageBoxText", resourceCulture);
+                return ResourceManager.GetString("WrongLoginParameters", resourceCulture);
             }
         }
     }

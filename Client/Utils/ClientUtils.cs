@@ -4,7 +4,7 @@ using System.Windows;
 using Client.Properties;
 using Client.ServiceReference1;
 
-namespace Client
+namespace Client.Utils
 {
     public static class ClientUtils
     {

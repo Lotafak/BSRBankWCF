@@ -9,11 +9,11 @@
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/BSRBankWCF.Models.WithdrawDepositImpl" />
     </xsd:schema>
   </wsdl:types>
-  <wsdl:message name="IService1_GetBankAccounts_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetBankAccounts" />
+  <wsdl:message name="IService1_GetUserAccounts_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserAccounts" />
   </wsdl:message>
-  <wsdl:message name="IService1_GetBankAccounts_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetBankAccountsResponse" />
+  <wsdl:message name="IService1_GetUserAccounts_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserAccountsResponse" />
   </wsdl:message>
   <wsdl:message name="IService1_AddUser_InputMessage">
     <wsdl:part name="parameters" element="tns:AddUser" />
@@ -33,10 +33,22 @@
   <wsdl:message name="IService1_WithdrawDepositMoney_OutputMessage">
     <wsdl:part name="parameters" element="tns:WithdrawDepositMoneyResponse" />
   </wsdl:message>
+  <wsdl:message name="IService1_ExecuteExternalTransfer_InputMessage">
+    <wsdl:part name="parameters" element="tns:ExecuteExternalTransfer" />
+  </wsdl:message>
+  <wsdl:message name="IService1_ExecuteExternalTransfer_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ExecuteExternalTransferResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_GetUsersHistory_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUsersHistory" />
+  </wsdl:message>
+  <wsdl:message name="IService1_GetUsersHistory_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUsersHistoryResponse" />
+  </wsdl:message>
   <wsdl:portType name="IService1">
-    <wsdl:operation name="GetBankAccounts">
-      <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetBankAccounts" message="tns:IService1_GetBankAccounts_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IService1/GetBankAccountsResponse" message="tns:IService1_GetBankAccounts_OutputMessage" />
+    <wsdl:operation name="GetUserAccounts">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetUserAccounts" message="tns:IService1_GetUserAccounts_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/GetUserAccountsResponse" message="tns:IService1_GetUserAccounts_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="AddUser">
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/AddUser" message="tns:IService1_AddUser_InputMessage" />
@@ -50,11 +62,19 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/WithdrawDepositMoney" message="tns:IService1_WithdrawDepositMoney_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IService1/WithdrawDepositMoneyResponse" message="tns:IService1_WithdrawDepositMoney_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="ExecuteExternalTransfer">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/ExecuteExternalTransfer" message="tns:IService1_ExecuteExternalTransfer_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/ExecuteExternalTransferResponse" message="tns:IService1_ExecuteExternalTransfer_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUsersHistory">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetUsersHistory" message="tns:IService1_GetUsersHistory_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/GetUsersHistoryResponse" message="tns:IService1_GetUsersHistory_OutputMessage" />
+    </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IService1" type="tns:IService1">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <wsdl:operation name="GetBankAccounts">
-      <soap:operation soapAction="http://tempuri.org/IService1/GetBankAccounts" style="document" />
+    <wsdl:operation name="GetUserAccounts">
+      <soap:operation soapAction="http://tempuri.org/IService1/GetUserAccounts" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -82,6 +102,24 @@
     </wsdl:operation>
     <wsdl:operation name="WithdrawDepositMoney">
       <soap:operation soapAction="http://tempuri.org/IService1/WithdrawDepositMoney" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExecuteExternalTransfer">
+      <soap:operation soapAction="http://tempuri.org/IService1/ExecuteExternalTransfer" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUsersHistory">
+      <soap:operation soapAction="http://tempuri.org/IService1/GetUsersHistory" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

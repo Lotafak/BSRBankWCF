@@ -1,7 +1,7 @@
 ﻿using System.Windows.Controls;
 using Client.ServiceReference1;
 
-namespace Client
+namespace Client.Pages
 {
     /// <summary>
     /// Interaction logic for MainPage.xaml
@@ -22,8 +22,8 @@ namespace Client
 
         public void RefreshGridview()
         {
-            var proxy = new Proxy();
-            AccountGridView.ItemsSource = proxy.GetBankAccounts(MainWindow.Credentials);
+            var proxy = new Proxy.Proxy();
+            AccountGridView.ItemsSource = proxy.GetUserAccounts(Windows.MainWindow.Credentials);
             AccountGridView.Items.Refresh();
         }
     }

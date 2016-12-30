@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import namespace="http://schemas.datacontract.org/2004/07/BSRBankWCF.Models" />
-  <xs:element name="GetBankAccounts">
+  <xs:element name="GetUserAccounts">
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="credentials" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetBankAccountsResponse">
+  <xs:element name="GetUserAccountsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/BSRBankWCF.Models" minOccurs="0" name="GetBankAccountsResult" nillable="true" type="q1:ArrayOfAccount" />
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/BSRBankWCF.Models" minOccurs="0" name="GetUserAccountsResult" nillable="true" type="q1:ArrayOfAccount" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -56,6 +56,36 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/BSRBankWCF.Models" minOccurs="0" name="WithdrawDepositMoneyResult" nillable="true" type="q5:Message" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ExecuteExternalTransfer">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/BSRBankWCF.Models" minOccurs="0" name="transfer" nillable="true" type="q6:Transfer" />
+        <xs:element minOccurs="0" name="accountTo" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="credentials" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ExecuteExternalTransferResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/BSRBankWCF.Models" minOccurs="0" name="ExecuteExternalTransferResult" nillable="true" type="q7:Message" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetUsersHistory">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="credentials" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetUsersHistoryResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/BSRBankWCF.Models" minOccurs="0" name="GetUsersHistoryResult" nillable="true" type="q8:ArrayOfHistory" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

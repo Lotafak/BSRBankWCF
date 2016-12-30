@@ -4,13 +4,11 @@ namespace Client
 {
     public class LoginWindowEventArgs : EventArgs
     {
-        public LoginWindowEventArgs(string password, string username)
+        public LoginWindowEventArgs(string credentials)
         {
-            Password = password;
-            Username = username;
+            Credentials = credentials;
         }
 
-        public string Username { get; private set; }
-        public string Password { get; private set; }
+        public string Credentials { get; private set; }
     }
 }

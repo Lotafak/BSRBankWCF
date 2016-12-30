@@ -142,6 +142,16 @@ namespace Client.ServiceReference1 {
     [System.Runtime.Serialization.DataContractAttribute(Name="ErrorMessage", Namespace="http://schemas.datacontract.org/2004/07/BSRBankWCF.Models.MessageImpl")]
     [System.SerializableAttribute()]
     public partial class ErrorMessage : Client.ServiceReference1.Message {
+        public ErrorMessage()
+        {
+            IsError = true;
+        }
+
+        public ErrorMessage( string message )
+        {
+            IsError = true;
+            MessageText = message;
+        }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -244,15 +254,217 @@ namespace Client.ServiceReference1 {
     public partial class Deposit : Client.ServiceReference1.WithdrawDeposit {
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Transfer", Namespace="http://schemas.datacontract.org/2004/07/BSRBankWCF.Models")]
+    [System.SerializableAttribute()]
+    public partial class Transfer : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private decimal AmountField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string FromField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string TitleField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public decimal Amount {
+            get {
+                return this.AmountField;
+            }
+            set {
+                if ((this.AmountField.Equals(value) != true)) {
+                    this.AmountField = value;
+                    this.RaisePropertyChanged("Amount");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string From {
+            get {
+                return this.FromField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FromField, value) != true)) {
+                    this.FromField = value;
+                    this.RaisePropertyChanged("From");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Title {
+            get {
+                return this.TitleField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TitleField, value) != true)) {
+                    this.TitleField = value;
+                    this.RaisePropertyChanged("Title");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="History", Namespace="http://schemas.datacontract.org/2004/07/BSRBankWCF.Models")]
+    [System.SerializableAttribute()]
+    public partial class History : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private decimal AmountField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime DateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string FromField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ToField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string TypeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int UserIdField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public decimal Amount {
+            get {
+                return this.AmountField;
+            }
+            set {
+                if ((this.AmountField.Equals(value) != true)) {
+                    this.AmountField = value;
+                    this.RaisePropertyChanged("Amount");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime Date {
+            get {
+                return this.DateField;
+            }
+            set {
+                if ((this.DateField.Equals(value) != true)) {
+                    this.DateField = value;
+                    this.RaisePropertyChanged("Date");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string From {
+            get {
+                return this.FromField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FromField, value) != true)) {
+                    this.FromField = value;
+                    this.RaisePropertyChanged("From");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string To {
+            get {
+                return this.ToField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ToField, value) != true)) {
+                    this.ToField = value;
+                    this.RaisePropertyChanged("To");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Type {
+            get {
+                return this.TypeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TypeField, value) != true)) {
+                    this.TypeField = value;
+                    this.RaisePropertyChanged("Type");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int UserId {
+            get {
+                return this.UserIdField;
+            }
+            set {
+                if ((this.UserIdField.Equals(value) != true)) {
+                    this.UserIdField = value;
+                    this.RaisePropertyChanged("UserId");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServiceReference1.IService1")]
     public interface IService1 {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetBankAccounts", ReplyAction="http://tempuri.org/IService1/GetBankAccountsResponse")]
-        System.Collections.Generic.List<Client.ServiceReference1.Account> GetBankAccounts(string credentials);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetUserAccounts", ReplyAction="http://tempuri.org/IService1/GetUserAccountsResponse")]
+        System.Collections.Generic.List<Client.ServiceReference1.Account> GetUserAccounts(string credentials);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetBankAccounts", ReplyAction="http://tempuri.org/IService1/GetBankAccountsResponse")]
-        System.Threading.Tasks.Task<System.Collections.Generic.List<Client.ServiceReference1.Account>> GetBankAccountsAsync(string credentials);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetUserAccounts", ReplyAction="http://tempuri.org/IService1/GetUserAccountsResponse")]
+        System.Threading.Tasks.Task<System.Collections.Generic.List<Client.ServiceReference1.Account>> GetUserAccountsAsync(string credentials);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/AddUser", ReplyAction="http://tempuri.org/IService1/AddUserResponse")]
         Client.ServiceReference1.Message AddUser(string login, string password);
@@ -271,6 +483,18 @@ namespace Client.ServiceReference1 {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/WithdrawDepositMoney", ReplyAction="http://tempuri.org/IService1/WithdrawDepositMoneyResponse")]
         System.Threading.Tasks.Task<Client.ServiceReference1.Message> WithdrawDepositMoneyAsync(Client.ServiceReference1.WithdrawDeposit withdrawDeposit);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ExecuteExternalTransfer", ReplyAction="http://tempuri.org/IService1/ExecuteExternalTransferResponse")]
+        Client.ServiceReference1.Message ExecuteExternalTransfer(Client.ServiceReference1.Transfer transfer, string accountTo, string credentials);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ExecuteExternalTransfer", ReplyAction="http://tempuri.org/IService1/ExecuteExternalTransferResponse")]
+        System.Threading.Tasks.Task<Client.ServiceReference1.Message> ExecuteExternalTransferAsync(Client.ServiceReference1.Transfer transfer, string accountTo, string credentials);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetUsersHistory", ReplyAction="http://tempuri.org/IService1/GetUsersHistoryResponse")]
+        System.Collections.Generic.List<Client.ServiceReference1.History> GetUsersHistory(string credentials);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetUsersHistory", ReplyAction="http://tempuri.org/IService1/GetUsersHistoryResponse")]
+        System.Threading.Tasks.Task<System.Collections.Generic.List<Client.ServiceReference1.History>> GetUsersHistoryAsync(string credentials);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -300,12 +524,12 @@ namespace Client.ServiceReference1 {
                 base(binding, remoteAddress) {
         }
         
-        public System.Collections.Generic.List<Client.ServiceReference1.Account> GetBankAccounts(string credentials) {
-            return base.Channel.GetBankAccounts(credentials);
+        public System.Collections.Generic.List<Client.ServiceReference1.Account> GetUserAccounts(string credentials) {
+            return base.Channel.GetUserAccounts(credentials);
         }
         
-        public System.Threading.Tasks.Task<System.Collections.Generic.List<Client.ServiceReference1.Account>> GetBankAccountsAsync(string credentials) {
-            return base.Channel.GetBankAccountsAsync(credentials);
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<Client.ServiceReference1.Account>> GetUserAccountsAsync(string credentials) {
+            return base.Channel.GetUserAccountsAsync(credentials);
         }
         
         public Client.ServiceReference1.Message AddUser(string login, string password) {
@@ -330,6 +554,22 @@ namespace Client.ServiceReference1 {
         
         public System.Threading.Tasks.Task<Client.ServiceReference1.Message> WithdrawDepositMoneyAsync(Client.ServiceReference1.WithdrawDeposit withdrawDeposit) {
             return base.Channel.WithdrawDepositMoneyAsync(withdrawDeposit);
+        }
+        
+        public Client.ServiceReference1.Message ExecuteExternalTransfer(Client.ServiceReference1.Transfer transfer, string accountTo, string credentials) {
+            return base.Channel.ExecuteExternalTransfer(transfer, accountTo, credentials);
+        }
+        
+        public System.Threading.Tasks.Task<Client.ServiceReference1.Message> ExecuteExternalTransferAsync(Client.ServiceReference1.Transfer transfer, string accountTo, string credentials) {
+            return base.Channel.ExecuteExternalTransferAsync(transfer, accountTo, credentials);
+        }
+        
+        public System.Collections.Generic.List<Client.ServiceReference1.History> GetUsersHistory(string credentials) {
+            return base.Channel.GetUsersHistory(credentials);
+        }
+        
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<Client.ServiceReference1.History>> GetUsersHistoryAsync(string credentials) {
+            return base.Channel.GetUsersHistoryAsync(credentials);
         }
     }
 }

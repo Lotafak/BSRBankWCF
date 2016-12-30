@@ -1,19 +1,20 @@
-﻿using System.Runtime.Serialization;
+﻿using System.ComponentModel;
+using System.Runtime.Serialization;
+using BSRBankWCF.Mongo;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace BSRBankWCF.Models
 {
     [DataContract]
-    internal class Transfer
+    public class Transfer
     {
-        [BsonId]
-        public ObjectId Id { get; set; }
+        [DataMember]
+        [BsonSerializer(typeof(MongoDbDecimalSerializer))]
+        public decimal Amount { get; set; }
 
         [DataMember]
-        public int Amount { get; set; }
-
-        [DataMember]
+        [DisplayName("AccountFrom")]
         public string From { get; set; }
 
         [DataMember]

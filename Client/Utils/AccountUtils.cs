@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace BSRBankWCF
+namespace Client.Utils
 {
     public class AccountUtils
     {

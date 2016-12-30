@@ -123,10 +123,7 @@
   <data name="InfoCaptionText" xml:space="preserve">
     <value>Informacja</value>
   </data>
-  <data name="LackOfLoginMessageBoxText" xml:space="preserve">
-    <value>Uzupełnij pole "Login"</value>
-  </data>
-  <data name="LackOfPasswordMessageBoxText" xml:space="preserve">
-    <value>Uzupełnij pole "Hasło"</value>
+  <data name="WrongLoginParameters" xml:space="preserve">
+    <value>Błędny login i/lub hasło</value>
   </data>
 </root>
