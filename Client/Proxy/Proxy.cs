@@ -57,6 +57,16 @@ namespace Client.Proxy
             return Channel.ExecuteExternalTransferAsync(transfer, accountTo, credentials);
         }
 
+        public Message ExecuteInternalTransfer(Transfer transfer, string accountTo, string credentials)
+        {
+            return Channel.ExecuteInternalTransfer(transfer, accountTo, credentials);
+        }
+
+        public Task<Message> ExecuteInternalTransferAsync(Transfer transfer, string accountTo, string credentials)
+        {
+            return Channel.ExecuteInternalTransferAsync(transfer, accountTo, credentials);
+        }
+
         public List<History> GetUsersHistory(string credentials)
         {
             return Channel.GetUsersHistory(credentials);
@@ -65,6 +75,16 @@ namespace Client.Proxy
         public Task<List<History>> GetUsersHistoryAsync(string credentials)
         {
             return Channel.GetUsersHistoryAsync(credentials);
+        }
+
+        public Message CreateBankAccount(string credentials)
+        {
+            return Channel.CreateBankAccount(credentials);
+        }
+
+        public Task<Message> CreateBankAccountAsync(string credentials)
+        {
+            return Channel.CreateBankAccountAsync(credentials);
         }
     }
 }

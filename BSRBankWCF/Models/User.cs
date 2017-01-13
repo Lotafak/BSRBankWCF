@@ -24,6 +24,16 @@ namespace BSRBankWCF.Models
             });
         }
 
+        public void CreateNewAccount()
+        {
+            Accounts.Add(new Account
+            {
+                BankAccountNumber = AccountUtils.CreateAccountNumber(Constants.BankId, getLastAccountIndex().Result + 1),
+                Amount = 0
+            });
+        }
+
+
         public ObjectId Id { get; set; }
 
         public int Lp { get; set; }
@@ -36,22 +46,22 @@ namespace BSRBankWCF.Models
 
         private int getLastUserIndex()
         {
-            //    var user = MongoRepository.GetDatabase().GetCollection<User>(Constants.UserCollection)
-            //        .Find(new BsonDocument())
-            //        .Sort(new BsonDocument("Lp", -1))
-            //        .FirstOrDefault();
-
-
             var user = MongoRepository.GetDatabase().GetCollection<User>(Constants.UserCollection)
                 .Find(new BsonDocument())
+                .Sort(new BsonDocument("Lp", -1))
                 .FirstOrDefault();
+
+
+            //var user = MongoRepository.GetCollection<User>()
+            //    .Find(new BsonDocument())
+            //    .FirstOrDefault();
 
             return user?.Lp ?? 0;
         }
 
         private async Task<int> getLastAccountIndex()
         {
-            var collection = MongoRepository.GetDatabase().GetCollection<User>(Constants.UserCollection);
+            var collection = MongoRepository.GetCollection<User>();
             var filter = new BsonDocument();
             var maxIndex = 0;
             using ( var cursor = await collection.FindAsync(filter) )

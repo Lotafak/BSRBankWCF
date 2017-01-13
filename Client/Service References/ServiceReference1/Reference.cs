@@ -144,12 +144,10 @@ namespace Client.ServiceReference1 {
     public partial class ErrorMessage : Client.ServiceReference1.Message {
         public ErrorMessage()
         {
-            IsError = true;
         }
 
         public ErrorMessage( string message )
         {
-            IsError = true;
             MessageText = message;
         }
     }
@@ -350,13 +348,16 @@ namespace Client.ServiceReference1 {
         private string FromField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Client.ServiceReference1.ObjectId IdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string ToField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string TypeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int UserIdField;
+        private int UserLpField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -408,6 +409,19 @@ namespace Client.ServiceReference1 {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public Client.ServiceReference1.ObjectId Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((this.IdField.Equals(value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string To {
             get {
                 return this.ToField;
@@ -434,14 +448,14 @@ namespace Client.ServiceReference1 {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int UserId {
+        public int UserLp {
             get {
-                return this.UserIdField;
+                return this.UserLpField;
             }
             set {
-                if ((this.UserIdField.Equals(value) != true)) {
-                    this.UserIdField = value;
-                    this.RaisePropertyChanged("UserId");
+                if ((this.UserLpField.Equals(value) != true)) {
+                    this.UserLpField = value;
+                    this.RaisePropertyChanged("UserLp");
                 }
             }
         }
@@ -449,6 +463,79 @@ namespace Client.ServiceReference1 {
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
         
         protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ObjectId", Namespace="http://schemas.datacontract.org/2004/07/MongoDB.Bson")]
+    [System.SerializableAttribute()]
+    public partial struct ObjectId : System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        private int _aField;
+        
+        private int _bField;
+        
+        private int _cField;
+        
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public int _a {
+            get {
+                return this._aField;
+            }
+            set {
+                if ((this._aField.Equals(value) != true)) {
+                    this._aField = value;
+                    this.RaisePropertyChanged("_a");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public int _b {
+            get {
+                return this._bField;
+            }
+            set {
+                if ((this._bField.Equals(value) != true)) {
+                    this._bField = value;
+                    this.RaisePropertyChanged("_b");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public int _c {
+            get {
+                return this._cField;
+            }
+            set {
+                if ((this._cField.Equals(value) != true)) {
+                    this._cField = value;
+                    this.RaisePropertyChanged("_c");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        void RaisePropertyChanged(string propertyName) {
             System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
             if ((propertyChanged != null)) {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
@@ -490,11 +577,23 @@ namespace Client.ServiceReference1 {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ExecuteExternalTransfer", ReplyAction="http://tempuri.org/IService1/ExecuteExternalTransferResponse")]
         System.Threading.Tasks.Task<Client.ServiceReference1.Message> ExecuteExternalTransferAsync(Client.ServiceReference1.Transfer transfer, string accountTo, string credentials);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ExecuteInternalTransfer", ReplyAction="http://tempuri.org/IService1/ExecuteInternalTransferResponse")]
+        Client.ServiceReference1.Message ExecuteInternalTransfer(Client.ServiceReference1.Transfer transfer, string accountTo, string credentials);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ExecuteInternalTransfer", ReplyAction="http://tempuri.org/IService1/ExecuteInternalTransferResponse")]
+        System.Threading.Tasks.Task<Client.ServiceReference1.Message> ExecuteInternalTransferAsync(Client.ServiceReference1.Transfer transfer, string accountTo, string credentials);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetUsersHistory", ReplyAction="http://tempuri.org/IService1/GetUsersHistoryResponse")]
         System.Collections.Generic.List<Client.ServiceReference1.History> GetUsersHistory(string credentials);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetUsersHistory", ReplyAction="http://tempuri.org/IService1/GetUsersHistoryResponse")]
         System.Threading.Tasks.Task<System.Collections.Generic.List<Client.ServiceReference1.History>> GetUsersHistoryAsync(string credentials);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/CreateBankAccount", ReplyAction="http://tempuri.org/IService1/CreateBankAccountResponse")]
+        Client.ServiceReference1.Message CreateBankAccount(string credentials);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/CreateBankAccount", ReplyAction="http://tempuri.org/IService1/CreateBankAccountResponse")]
+        System.Threading.Tasks.Task<Client.ServiceReference1.Message> CreateBankAccountAsync(string credentials);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -564,12 +663,28 @@ namespace Client.ServiceReference1 {
             return base.Channel.ExecuteExternalTransferAsync(transfer, accountTo, credentials);
         }
         
+        public Client.ServiceReference1.Message ExecuteInternalTransfer(Client.ServiceReference1.Transfer transfer, string accountTo, string credentials) {
+            return base.Channel.ExecuteInternalTransfer(transfer, accountTo, credentials);
+        }
+        
+        public System.Threading.Tasks.Task<Client.ServiceReference1.Message> ExecuteInternalTransferAsync(Client.ServiceReference1.Transfer transfer, string accountTo, string credentials) {
+            return base.Channel.ExecuteInternalTransferAsync(transfer, accountTo, credentials);
+        }
+        
         public System.Collections.Generic.List<Client.ServiceReference1.History> GetUsersHistory(string credentials) {
             return base.Channel.GetUsersHistory(credentials);
         }
         
         public System.Threading.Tasks.Task<System.Collections.Generic.List<Client.ServiceReference1.History>> GetUsersHistoryAsync(string credentials) {
             return base.Channel.GetUsersHistoryAsync(credentials);
+        }
+        
+        public Client.ServiceReference1.Message CreateBankAccount(string credentials) {
+            return base.Channel.CreateBankAccount(credentials);
+        }
+        
+        public System.Threading.Tasks.Task<Client.ServiceReference1.Message> CreateBankAccountAsync(string credentials) {
+            return base.Channel.CreateBankAccountAsync(credentials);
         }
     }
 }

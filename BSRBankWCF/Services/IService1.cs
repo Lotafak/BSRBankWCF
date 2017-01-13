@@ -23,6 +23,12 @@ namespace BSRBankWCF.Services
         Message ExecuteExternalTransfer(Transfer transfer, string accountTo, string credentials);
 
         [OperationContract]
+        Message ExecuteInternalTransfer(Transfer transfer, string accountTo, string credentials);
+
+        [OperationContract]
         List<History> GetUsersHistory(string credentials);
+
+        [OperationContract]
+        Message CreateBankAccount(string credentials);
     }
 }

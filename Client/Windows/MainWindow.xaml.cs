@@ -115,7 +115,7 @@ namespace Client.Windows
         {
             // Getting and checking selected item in GridView
             var selectedAccount = _gridViewPage.GetSelectedItem();
-            var transferPage = new Pages.TransferPage();
+            var transferPage = new Pages.TransferPage(true);
 
             // When no item is selected in GridView do nothing
             if (selectedAccount != null) transferPage.InsertBankAccount(selectedAccount.BankAccountNumber);
@@ -125,15 +125,14 @@ namespace Client.Windows
 
         private void InternalTransfer_OnClick(object sender, RoutedEventArgs e)
         {
-            var webClient = new WebClient
-            {
-                Headers = {["Content-type"] = "application/json"},
-                Encoding = Encoding.UTF8
-            };
-            var s =
-                webClient.DownloadString(
-                    "http://localhost:8733/Design_Time_Addresses/BSRBankWCF/RestService/accounts/11");
-            MessageBox.Show(s);
+            // Getting and checking selected item in GridView
+            var selectedAccount = _gridViewPage.GetSelectedItem();
+            var transferPage = new Pages.TransferPage(false);
+
+            // When no item is selected in GridView do nothing
+            if ( selectedAccount != null ) transferPage.InsertBankAccount(selectedAccount.BankAccountNumber);
+
+            Main.Content = transferPage;
         }
 
         private void HomeButton_OnClick(object sender, RoutedEventArgs e)
@@ -146,6 +145,15 @@ namespace Client.Windows
         {
             var historyPage = new Pages.HistoryPage();
             Main.Content = historyPage;
+        }
+
+        private void CreateAccount_OnClick(object sender, RoutedEventArgs e)
+        {
+            var proxy = new Proxy.Proxy();
+
+            proxy.CreateBankAccount(Credentials);
+
+            _gridViewPage.RefreshGridview();
         }
     }
 }

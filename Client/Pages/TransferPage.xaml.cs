@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Navigation;
 using Client.ServiceReference1;
 using Client.Utils;
@@ -12,9 +13,17 @@ namespace Client.Pages
     /// </summary>
     public partial class TransferPage
     {
-        public TransferPage()
+        private readonly bool _isExternal;
+        private TransferPage()
         {
             InitializeComponent();
+        }
+
+        public TransferPage(bool isExt )
+        {
+            _isExternal = isExt;
+            InitializeComponent();
+            TransferLabel.Content = isExt ? "Przelew zewnętrzny" : "Przelew wewnętrzny";
         }
 
         public void InsertBankAccount( string bankAccountNumber )
@@ -32,7 +41,7 @@ namespace Client.Pages
                 ns.GoBack();
         }
 
-        private void DoTransferButton_OnClick( object sender, RoutedEventArgs e )
+        private void DoTransfer( object sender, RoutedEventArgs e )
         {
             if(!CheckTransferParameters())
                 return;
@@ -45,7 +54,9 @@ namespace Client.Pages
             };
 
             var proxy = new Proxy.Proxy();
-            var respondMessage = proxy.ExecuteExternalTransfer(transfer, AccountToTextBox.Text, MainWindow.Credentials);
+            var respondMessage = _isExternal ? proxy.ExecuteExternalTransfer(transfer, AccountToTextBox.Text, MainWindow.Credentials) : 
+                proxy.ExecuteInternalTransfer(transfer, AccountToTextBox.Text, MainWindow.Credentials);
+
             ClientUtils.ShowMessage(respondMessage);
 
             var ns = NavigationService.GetNavigationService(DoTransferButton);

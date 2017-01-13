@@ -97,7 +97,7 @@ namespace BSRBankWCF.Services.Implementations
                     .UpdateOne(filter, update);
             if ( result.IsAcknowledged )
             {
-                var hist = new History()
+                var hist = new History
                 {
                     UserLp = user.Lp,
                     Amount = withdrawDeposit.Amount,
@@ -117,7 +117,7 @@ namespace BSRBankWCF.Services.Implementations
         public Message ExecuteExternalTransfer( Transfer transfer, string accountTo, string credentials )
         {
             _httpClient = new HttpClient();
-            _httpClient.BaseAddress = new Uri($"http://localhost:8733/Design_Time_Addresses/BSRBankWCF/RestService/accounts/");
+            _httpClient.BaseAddress = new Uri($"http://localhost:8000/accounts/");
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
             _httpClient.DefaultRequestHeaders.Accept.Clear();
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -169,13 +169,97 @@ namespace BSRBankWCF.Services.Implementations
             return resultMessage;
         }
 
+        public Message ExecuteInternalTransfer(Transfer transfer, string accountTo, string credentials)
+        {
+            var filter = Builders<User>.Filter
+                .Where(x => x.Credentials == credentials);
+            var collection = MongoRepository.GetCollection<User>();
+
+            var user = collection.Find(filter).FirstOrDefault();
+
+            var from = user?.Accounts.FirstOrDefault(a => a.BankAccountNumber == transfer.From);
+            var to = user?.Accounts.FirstOrDefault(a => a.BankAccountNumber == accountTo);
+
+            if (user == null)
+                return new ErrorMessage("Brak podanego użytkownika");
+
+            if (from == null)
+                return new ErrorMessage($"Błędny numer rachunku bankowego: {transfer.From}");
+            
+            if(to == null)
+                return new ErrorMessage($"Błędny numer rachunku bankowego: {accountTo}");
+
+            var newAmountFrom = from.Amount - transfer.Amount;
+            if ( newAmountFrom < 0 )
+                return new ErrorMessage("Nie wystarczająca ilość środków na koncie");
+
+            var newAmountTo = to.Amount + transfer.Amount;
+
+            var filterFrom = Builders<User>.Filter
+                .Where(x => x.Credentials == credentials && x.Accounts.Any(a => a.BankAccountNumber == transfer.From));
+            var filterTo = Builders<User>.Filter
+                .Where(x => x.Credentials == credentials && x.Accounts.Any(a => a.BankAccountNumber == accountTo));
+
+            var updateFrom = Builders<User>.Update.Set(x => x.Accounts[-1].Amount, newAmountFrom);
+            var resultFrom =
+                MongoRepository.GetCollection<User>()
+                    .UpdateOne(filterFrom, updateFrom);
+
+            var updateTo = Builders<User>.Update.Set(x => x.Accounts[-1].Amount, newAmountTo);
+            var resultTo =
+                MongoRepository.GetCollection<User>()
+                    .UpdateOne(filterTo, updateTo);
+
+            if ( resultTo.IsAcknowledged  && resultFrom.IsAcknowledged)
+            {
+                var historyCollection = MongoRepository.GetCollection<History>();
+                var historyRecord = new History
+                {
+                    Amount = transfer.Amount,
+                    Date = DateTime.Now,
+                    From = transfer.From,
+                    To = accountTo,
+                    Type = Constants.ExternalTransferType,
+                    UserLp = user.Lp
+                };
+                historyCollection.InsertOneAsync(historyRecord);
+
+                return new ResultMessage("Operacja zakończona pomyślnie");
+            }
+
+            return new ErrorMessage("Operacja przerwana");
+        }
+
         public List<History> GetUsersHistory(string credentials)
         {
-            var user = MongoRepository.GetCollection<User>().Find(Builders<User>.Filter.Where(x =>x.Credentials == credentials))
+            var user = MongoRepository.GetCollection<User>()
+                .Find(Builders<User>.Filter.Where(x =>x.Credentials == credentials))
                 .FirstOrDefault();
             return user == null ? null : MongoRepository.GetCollection<History>()
                 .Find(Builders<History>.Filter.Where(x => x.UserLp == user.Lp))
                 ?.ToList();
+        }
+
+        public Message CreateBankAccount(string credentials)
+        {
+            var filter = Builders<User>.Filter.Where(x => x.Credentials == credentials);
+            var user = MongoRepository.GetCollection<User>()
+                .Find(filter)
+                .FirstOrDefault();
+
+            if(user == null)
+                return new ErrorMessage("Nie znaleziono danego użytkownika");
+
+            user.CreateNewAccount();
+
+            var update = Builders<User>.Update.Set(x => x.Accounts, user.Accounts);
+            var result = MongoRepository.GetCollection<User>()
+                .UpdateOne(filter, update);
+            if (result.IsAcknowledged)
+            {
+                return new ResultMessage("Poprawnie dodano konto bankowe");
+            }
+            return new ErrorMessage("Dodawanie konta bankowego zakończone niepowodzeniem");
         }
 
         private async Task<Message> SendRequest( Transfer transfer, string accountTo )

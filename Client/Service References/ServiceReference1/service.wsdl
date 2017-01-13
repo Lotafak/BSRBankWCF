@@ -7,6 +7,7 @@
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/BSRBankWCF.Models" />
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/BSRBankWCF.Models.MessageImpl" />
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/BSRBankWCF.Models.WithdrawDepositImpl" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/MongoDB.Bson" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IService1_GetUserAccounts_InputMessage">
@@ -39,11 +40,23 @@
   <wsdl:message name="IService1_ExecuteExternalTransfer_OutputMessage">
     <wsdl:part name="parameters" element="tns:ExecuteExternalTransferResponse" />
   </wsdl:message>
+  <wsdl:message name="IService1_ExecuteInternalTransfer_InputMessage">
+    <wsdl:part name="parameters" element="tns:ExecuteInternalTransfer" />
+  </wsdl:message>
+  <wsdl:message name="IService1_ExecuteInternalTransfer_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ExecuteInternalTransferResponse" />
+  </wsdl:message>
   <wsdl:message name="IService1_GetUsersHistory_InputMessage">
     <wsdl:part name="parameters" element="tns:GetUsersHistory" />
   </wsdl:message>
   <wsdl:message name="IService1_GetUsersHistory_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetUsersHistoryResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_CreateBankAccount_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateBankAccount" />
+  </wsdl:message>
+  <wsdl:message name="IService1_CreateBankAccount_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateBankAccountResponse" />
   </wsdl:message>
   <wsdl:portType name="IService1">
     <wsdl:operation name="GetUserAccounts">
@@ -66,9 +79,17 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/ExecuteExternalTransfer" message="tns:IService1_ExecuteExternalTransfer_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IService1/ExecuteExternalTransferResponse" message="tns:IService1_ExecuteExternalTransfer_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="ExecuteInternalTransfer">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/ExecuteInternalTransfer" message="tns:IService1_ExecuteInternalTransfer_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/ExecuteInternalTransferResponse" message="tns:IService1_ExecuteInternalTransfer_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="GetUsersHistory">
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetUsersHistory" message="tns:IService1_GetUsersHistory_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IService1/GetUsersHistoryResponse" message="tns:IService1_GetUsersHistory_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateBankAccount">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/CreateBankAccount" message="tns:IService1_CreateBankAccount_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/CreateBankAccountResponse" message="tns:IService1_CreateBankAccount_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IService1" type="tns:IService1">
@@ -118,8 +139,26 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="ExecuteInternalTransfer">
+      <soap:operation soapAction="http://tempuri.org/IService1/ExecuteInternalTransfer" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="GetUsersHistory">
       <soap:operation soapAction="http://tempuri.org/IService1/GetUsersHistory" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateBankAccount">
+      <soap:operation soapAction="http://tempuri.org/IService1/CreateBankAccount" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

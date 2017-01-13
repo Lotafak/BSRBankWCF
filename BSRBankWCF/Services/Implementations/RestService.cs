@@ -14,7 +14,6 @@ namespace BSRBankWCF.Services.Implementations
     {
         public Stream RecieveTransfer( Stream stream, string bankAccountNumber )
         {
-            // TODO: ISSUE with sending request with application/json header.
             var sr = new StreamReader(stream);
             var res = sr.ReadToEnd();
             var transfer = JsonConvert.DeserializeObject<Transfer>(res);
@@ -22,9 +21,16 @@ namespace BSRBankWCF.Services.Implementations
             var ctx = WebOperationContext.Current;
             if ( ctx == null )
                 return AccountUtils.CreateJsonErrorResponse("Coś poszło mocno nie tak");
-
-            // TODO: SPRAWDZANIE KONTA
-            var auth = ctx.IncomingRequest.Headers[HttpRequestHeader.Authorization];
+            
+            // Getting WWW-Authenticate header from POST request. eqample "Basic 23sd1"
+            // Substring cuts "Basic "
+            var credentials = ctx.IncomingRequest.Headers[HttpRequestHeader.Authorization].Substring(6);
+            var truth = AccountUtils.Base64Encode("admin:admin");
+            if (truth != credentials)
+            {
+                ctx.OutgoingResponse.StatusCode = HttpStatusCode.Forbidden;
+                return AccountUtils.CreateJsonErrorResponse("Błąd uwierzytelniania");
+            }
 
             var isValidTo = AccountUtils.ValidateAccountNumber(bankAccountNumber);
 
@@ -46,9 +52,7 @@ namespace BSRBankWCF.Services.Implementations
                     x.Accounts.Any(a => a.BankAccountNumber == bankAccountNumber));
 
             var accountTo = collection.Find(filterTo)
-                .FirstOrDefault()?
-                .Accounts
-                .FirstOrDefault(a => a.BankAccountNumber == bankAccountNumber);
+                .FirstOrDefault().Accounts.FirstOrDefault(a => a.BankAccountNumber == bankAccountNumber);
 
             if ( accountTo == null )
             {

@@ -30,6 +30,7 @@
     <MetadataFile FileName="BSRBankWCF.Models.xsd" MetadataType="Schema" ID="ded58204-a330-49d3-b3a4-ccecc44ee5fa" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/BSRBankWCF/Service1/mex" />
     <MetadataFile FileName="BSRBankWCF.Models.MessageImpl.xsd" MetadataType="Schema" ID="b402a9ed-3661-4283-a0bc-f11d5466f9b6" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/BSRBankWCF/Service1/mex" />
     <MetadataFile FileName="BSRBankWCF.Models.WithdrawDepositImpl.xsd" MetadataType="Schema" ID="ce8eedc8-1293-4e57-93b1-809b1aafd449" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/BSRBankWCF/Service1/mex" />
+    <MetadataFile FileName="MongoDB.Bson.xsd" MetadataType="Schema" ID="d8a245da-8e6e-436f-959f-3f2a21cf4942" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/BSRBankWCF/Service1/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

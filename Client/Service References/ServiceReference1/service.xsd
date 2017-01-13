@@ -75,6 +75,22 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="ExecuteInternalTransfer">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/BSRBankWCF.Models" minOccurs="0" name="transfer" nillable="true" type="q8:Transfer" />
+        <xs:element minOccurs="0" name="accountTo" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="credentials" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ExecuteInternalTransferResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/BSRBankWCF.Models" minOccurs="0" name="ExecuteInternalTransferResult" nillable="true" type="q9:Message" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="GetUsersHistory">
     <xs:complexType>
       <xs:sequence>
@@ -85,7 +101,21 @@
   <xs:element name="GetUsersHistoryResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/BSRBankWCF.Models" minOccurs="0" name="GetUsersHistoryResult" nillable="true" type="q8:ArrayOfHistory" />
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/BSRBankWCF.Models" minOccurs="0" name="GetUsersHistoryResult" nillable="true" type="q10:ArrayOfHistory" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CreateBankAccount">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="credentials" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CreateBankAccountResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/BSRBankWCF.Models" minOccurs="0" name="CreateBankAccountResult" nillable="true" type="q11:Message" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

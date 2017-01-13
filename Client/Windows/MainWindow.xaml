@@ -22,7 +22,9 @@
         </Grid.ColumnDefinitions>
         
         <Label x:Name="LoggedAsLabel" Content="Zalogowano jako: " Grid.Row="0"></Label>
-        
+
+        <Button x:Name="CreateAccount" Width="100" Height="20" Content="Dodaj konto" Grid.Column="1" Grid.Row="0"
+                Click="CreateAccount_OnClick" Margin="5,5,5,5"/>
         <Button x:Name="DepositButton" Width="120" Height="30" Content="Wpłać pieniądze" Grid.Column="1" Grid.Row="1"
                 Click="WithdrawDepositButton_OnClick" Margin="5,5,5,5"/>
         <Button x:Name="WithdrawButton" Width="120" Height="30" Content="Wypłać pieniądze" Grid.Column="1" Grid.Row="2"
