@@ -117,10 +117,85 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ErrorCaptionText" xml:space="preserve">
-    <value>Błąd</value>
+  <data name="BankAccountConditionListViewHeader" xml:space="preserve">
+    <value>Stan konta</value>
   </data>
-  <data name="InfoCaptionText" xml:space="preserve">
-    <value>Informacja</value>
+  <data name="BankAccountNumberListViewHeader" xml:space="preserve">
+    <value>Numer rachunku</value>
+  </data>
+  <data name="ExternalTransfer" xml:space="preserve">
+    <value>Przelew zewnętrzny</value>
+  </data>
+  <data name="HistoryAmountListViewHeader" xml:space="preserve">
+    <value>Kwota</value>
+  </data>
+  <data name="HistoryDateListViewHeader" xml:space="preserve">
+    <value>Data</value>
+  </data>
+  <data name="HistoryFromListViewHeader" xml:space="preserve">
+    <value>Od</value>
+  </data>
+  <data name="HistoryOperationTypeListViewHeader" xml:space="preserve">
+    <value>Operacja</value>
+  </data>
+  <data name="HistoryToListViewHeader" xml:space="preserve">
+    <value>Do</value>
+  </data>
+  <data name="InternalTransfer" xml:space="preserve">
+    <value>Przelew wewnętrzny</value>
+  </data>
+  <data name="InvalidBankAccountFrom" xml:space="preserve">
+    <value>Niepoprawny numer konta bankowego nadawcy</value>
+  </data>
+  <data name="InvalidBankAccountTo" xml:space="preserve">
+    <value>Niepoprawny numer konta bankowego odbiorcy</value>
+  </data>
+  <data name="MainCreateAccount" xml:space="preserve">
+    <value>Dodaj konto</value>
+  </data>
+  <data name="MainDepositMoney" xml:space="preserve">
+    <value>Wpłać pieniądze</value>
+  </data>
+  <data name="MainHistory" xml:space="preserve">
+    <value>Historia operacji</value>
+  </data>
+  <data name="MainHome" xml:space="preserve">
+    <value>Strona startowa</value>
+  </data>
+  <data name="MainLoggedAs" xml:space="preserve">
+    <value>Zalogowano jako: </value>
+  </data>
+  <data name="MainWithdrawMoney" xml:space="preserve">
+    <value>Wypłać pieniądze</value>
+  </data>
+  <data name="NoTitleError" xml:space="preserve">
+    <value>Proszę wypełnić polę "Tytuł"</value>
+  </data>
+  <data name="SameFromToBankAccounts" xml:space="preserve">
+    <value>Konto odbiory i nadawcy nie mogą być takie same</value>
+  </data>
+  <data name="TransferAmount" xml:space="preserve">
+    <value>Kwota:</value>
+  </data>
+  <data name="TransferExecuteTransfer" xml:space="preserve">
+    <value>Zrealizuj przelew</value>
+  </data>
+  <data name="TransferFrom" xml:space="preserve">
+    <value>Konto nadawcy:</value>
+  </data>
+  <data name="TransferGoBack" xml:space="preserve">
+    <value>Wstecz</value>
+  </data>
+  <data name="TransferTitle" xml:space="preserve">
+    <value>Tytuł:</value>
+  </data>
+  <data name="TransferTo" xml:space="preserve">
+    <value>Konto odbiorcy:</value>
+  </data>
+  <data name="WrongAmount" xml:space="preserve">
+    <value>Niepoprawna kwota przelewu</value>
+  </data>
+  <data name="WrongLoginParameters" xml:space="preserve">
+    <value>Niepoprawn login i/lub hasło</value>
   </data>
 </root>

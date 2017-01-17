@@ -63,8 +63,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ResourceWrapper.cs" />
     <Compile Include="Pages\HistoryPage.xaml.cs">
       <DependentUpon>HistoryPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Resource\Res-pl.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Res-pl.resx</DependentUpon>
     </Compile>
     <Compile Include="Utils\AccountUtils.cs" />
     <Compile Include="Utils\ClientUtils.cs" />
@@ -132,6 +138,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resource\Res-pl.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Res-pl.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\DataSources\BSRBankWCF.Message.datasource" />

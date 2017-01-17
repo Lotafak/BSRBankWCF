@@ -18,12 +18,12 @@
                             <Setter Property="HorizontalContentAlignment" Value="Left" />
                         </Style>
                     </GridView.ColumnHeaderContainerStyle>
-                    <GridViewColumn Width="70" Header="Operacja" DisplayMemberBinding="{Binding Type}" />
-                    <GridViewColumn Width="120" Header="Od" DisplayMemberBinding="{Binding From}" />
-                    <GridViewColumn Width="120" Header="Do" DisplayMemberBinding="{Binding To}" />
-                    <GridViewColumn Width="60" Header="Kwota" 
+                    <GridViewColumn x:Name="HistoryOperationType" Width="70" DisplayMemberBinding="{Binding Type}" />
+                    <GridViewColumn x:Name="HistoryFrom" Width="120" DisplayMemberBinding="{Binding From}" />
+                    <GridViewColumn x:Name="HistoryTo" Width="120" DisplayMemberBinding="{Binding To}" />
+                    <GridViewColumn x:Name="HistoryAmount" Width="60" 
                                     DisplayMemberBinding="{Binding Amount, StringFormat={}{0:C}, ConverterCulture={x:Static globalization:CultureInfo.CurrentCulture}}" />
-                    <GridViewColumn Width="120" Header="Data"
+                    <GridViewColumn x:Name="HistoryDate" Width="120" Header="Data"
                                     DisplayMemberBinding="{Binding Date, StringFormat={}{0:g}}" />
                 </GridView>
             </ListView.View>

@@ -21,21 +21,21 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         
-        <Label x:Name="LoggedAsLabel" Content="Zalogowano jako: " Grid.Row="0"></Label>
+        <Label x:Name="LoggedAsLabel" Grid.Row="0"></Label>
 
-        <Button x:Name="CreateAccount" Width="100" Height="20" Content="Dodaj konto" Grid.Column="1" Grid.Row="0"
+        <Button x:Name="CreateAccount" Width="100" Height="20" Grid.Column="1" Grid.Row="0"
                 Click="CreateAccount_OnClick" Margin="5,5,5,5"/>
-        <Button x:Name="DepositButton" Width="120" Height="30" Content="Wpłać pieniądze" Grid.Column="1" Grid.Row="1"
+        <Button x:Name="DepositButton" Width="120" Height="30" Grid.Column="1" Grid.Row="1"
                 Click="WithdrawDepositButton_OnClick" Margin="5,5,5,5"/>
-        <Button x:Name="WithdrawButton" Width="120" Height="30" Content="Wypłać pieniądze" Grid.Column="1" Grid.Row="2"
+        <Button x:Name="WithdrawButton" Width="120" Height="30" Grid.Column="1" Grid.Row="2"
                 Click="WithdrawDepositButton_OnClick" Margin="5,5,5,5"/>
-        <Button x:Name="ExternalTransfer" Width="120" Height="30" Content="Przelew zewnętrzny" Grid.Column="1" Grid.Row="3"
+        <Button x:Name="ExternalTransfer" Width="120" Height="30" Grid.Column="1" Grid.Row="3"
                 Click="ExternalTransfer_OnClick" Margin="5,5,5,5"/>
-        <Button x:Name="InternalTransfer" Width="120" Height="30" Content="Przelew wewnętrzny" Grid.Column="1" Grid.Row="4"
+        <Button x:Name="InternalTransfer" Width="120" Height="30" Grid.Column="1" Grid.Row="4"
                 Click="InternalTransfer_OnClick" Margin="5,5,5,5"/>
-        <Button x:Name="HomeButton" Width="120" Height="30" Content="Strona startowa" Grid.Column="1" Grid.Row="6"
+        <Button x:Name="HomeButton" Width="120" Height="30" Grid.Column="1" Grid.Row="6"
                 Click="HomeButton_OnClick" Margin="5,5,5,5"/>
-        <Button x:Name="HistoryButton" Width="120" Height="30" Content="Historia operacji" Grid.Column="1" Grid.Row="5"
+        <Button x:Name="HistoryButton" Width="120" Height="30" Grid.Column="1" Grid.Row="5"
                 Click="HistoryButton_OnClick" Margin="5,5,5,5"/>
         <ProgressBar x:Name="ProgressBar" Grid.Column="1" Grid.Row="7" Margin="5,5,5,5" Height="25"
                      IsIndeterminate="True" Visibility="Hidden" />

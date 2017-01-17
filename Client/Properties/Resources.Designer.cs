@@ -61,7 +61,7 @@ namespace Client.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bład.
+        ///   Looks up a localized string similar to Błąd.
         /// </summary>
         internal static string ErrorCaptionText {
             get {
@@ -75,15 +75,6 @@ namespace Client.Properties {
         internal static string InfoCaptionText {
             get {
                 return ResourceManager.GetString("InfoCaptionText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Błędny login i/lub hasło.
-        /// </summary>
-        internal static string WrongLoginParameters {
-            get {
-                return ResourceManager.GetString("WrongLoginParameters", resourceCulture);
             }
         }
     }

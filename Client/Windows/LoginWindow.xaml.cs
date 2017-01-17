@@ -13,6 +13,7 @@ namespace Client.Windows
     public partial class LoginWindow
     {
         private readonly MainWindow _mainWindow = new MainWindow();
+        private readonly ResourceWrapper _resourceWrapper = new ResourceWrapper();
 
         public LoginWindow()
         {
@@ -92,7 +93,7 @@ namespace Client.Windows
         {
             if ( password_passwordBox.Password != "" && login_textBox.Text != "" ) return true;
 
-            MessageBox.Show(Properties.Resources.WrongLoginParameters);
+            MessageBox.Show(_resourceWrapper.WrongLoginParameters);
             return false;
         }
     }

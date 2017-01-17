@@ -15,6 +15,11 @@ using Newtonsoft.Json;
 
 namespace BSRBankWCF.Services.Implementations
 {
+    /// <summary>
+    /// Implementation of interface IService1. Eesponsible for 
+    /// connecting and manipulating database, validating data 
+    /// and also making external transfer (REST) call
+    /// </summary>
     [ServiceBehavior(IncludeExceptionDetailInFaults = true)]
     public class Service1 : IService1
     {
@@ -210,24 +215,21 @@ namespace BSRBankWCF.Services.Implementations
                 MongoRepository.GetCollection<User>()
                     .UpdateOne(filterTo, updateTo);
 
-            if ( resultTo.IsAcknowledged  && resultFrom.IsAcknowledged)
+            if (!resultTo.IsAcknowledged || !resultFrom.IsAcknowledged) return new ErrorMessage("Operacja przerwana");
+            
+            var historyCollection = MongoRepository.GetCollection<History>();
+            var historyRecord = new History
             {
-                var historyCollection = MongoRepository.GetCollection<History>();
-                var historyRecord = new History
-                {
-                    Amount = transfer.Amount,
-                    Date = DateTime.Now,
-                    From = transfer.From,
-                    To = accountTo,
-                    Type = Constants.ExternalTransferType,
-                    UserLp = user.Lp
-                };
-                historyCollection.InsertOneAsync(historyRecord);
+                Amount = transfer.Amount,
+                Date = DateTime.Now,
+                From = transfer.From,
+                To = accountTo,
+                Type = Constants.InternalTransferType,
+                UserLp = user.Lp
+            };
+            historyCollection.InsertOneAsync(historyRecord);
 
-                return new ResultMessage("Operacja zakończona pomyślnie");
-            }
-
-            return new ErrorMessage("Operacja przerwana");
+            return new ResultMessage("Operacja zakończona pomyślnie");
         }
 
         public List<History> GetUsersHistory(string credentials)

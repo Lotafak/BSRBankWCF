@@ -19,9 +19,9 @@
                             <Setter Property="HorizontalContentAlignment" Value="Left" />
                         </Style>
                     </GridView.ColumnHeaderContainerStyle>
-                    <GridViewColumn Width="240" Header="Numer rachunku"
+                    <GridViewColumn x:Name="BankAccountNumber" Width="240"
                                     DisplayMemberBinding="{Binding BankAccountNumber}" />
-                    <GridViewColumn Width="100" Header="Stan rachunku"
+                    <GridViewColumn x:Name="BankAccountCondition" Width="100"
                                     DisplayMemberBinding="{Binding Amount, StringFormat={}{0:C}, ConverterCulture={x:Static globalization:CultureInfo.CurrentCulture}}" />
                 </GridView>
             </ListView.View>

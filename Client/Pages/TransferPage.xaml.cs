@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Navigation;
 using Client.ServiceReference1;
 using Client.Utils;
@@ -14,23 +13,46 @@ namespace Client.Pages
     public partial class TransferPage
     {
         private readonly bool _isExternal;
+        private readonly ResourceWrapper _resourceWrapper = new ResourceWrapper();
+
+        // Private constructor not allowed to access from within another class. 
+        // The reason is we want to know whether to create internal or external transfer page.
         private TransferPage()
         {
             InitializeComponent();
+            TransferFromLabel.Content = _resourceWrapper.TransferFrom;
+            TransferToLabel.Content = _resourceWrapper.TransferTo;
+            TransferAmountLabel.Content = _resourceWrapper.TransferAmount;
+            TransferTitleLabel.Content = _resourceWrapper.TransferTitle;
+            GoBackButton.Content = _resourceWrapper.TransferGoBack;
+            ExecuteTransferButton.Content = _resourceWrapper.TransferExecuteTransfer;
         }
 
-        public TransferPage(bool isExt )
+        /// <summary>
+        /// Creates Internal or External Transfer Page 
+        /// </summary>
+        /// <param name="isExt">Indicates whether to create external or internal transfer page</param>
+        public TransferPage(bool isExt ) : this()
         {
             _isExternal = isExt;
-            InitializeComponent();
-            TransferLabel.Content = isExt ? "Przelew zewnętrzny" : "Przelew wewnętrzny";
+            TransferLabel.Content = isExt ? 
+                _resourceWrapper.ExternalTransfer : _resourceWrapper.InternalTransfer;
         }
 
+        /// <summary>
+        /// Fill Text property of AccountFromTextBox. 
+        /// </summary>
+        /// <param name="bankAccountNumber">26 digit users bank account number</param>
         public void InsertBankAccount( string bankAccountNumber )
         {
             AccountFromTextBox.Text = bankAccountNumber;
         }
 
+        /// <summary>
+        /// Call NavigationService to go back if possible.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void GoBackButton_OnClick( object sender, RoutedEventArgs e )
         {
             var ns = NavigationService.GetNavigationService(GoBackButton);
@@ -41,6 +63,11 @@ namespace Client.Pages
                 ns.GoBack();
         }
 
+        /// <summary>
+        /// Execute external or internal transfer call to SOAP Service. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DoTransfer( object sender, RoutedEventArgs e )
         {
             if(!CheckTransferParameters())
@@ -54,12 +81,16 @@ namespace Client.Pages
             };
 
             var proxy = new Proxy.Proxy();
-            var respondMessage = _isExternal ? proxy.ExecuteExternalTransfer(transfer, AccountToTextBox.Text, MainWindow.Credentials) : 
+
+            // Invoke internal or external transfer call
+            var respondMessage = _isExternal ? 
+                proxy.ExecuteExternalTransfer(transfer, AccountToTextBox.Text, MainWindow.Credentials) : 
                 proxy.ExecuteInternalTransfer(transfer, AccountToTextBox.Text, MainWindow.Credentials);
 
             ClientUtils.ShowMessage(respondMessage);
 
-            var ns = NavigationService.GetNavigationService(DoTransferButton);
+            // Go back to main window
+            var ns = NavigationService.GetNavigationService(ExecuteTransferButton);
 
             if(ns == null) return;
 
@@ -71,35 +102,32 @@ namespace Client.Pages
         {
             var proxy = new Proxy.Proxy();
             if ( !AccountUtils.ValidateAccountNumber(AccountFromTextBox.Text) ||
-                proxy.GetUserAccounts(MainWindow.Credentials).All(x => x.BankAccountNumber != AccountFromTextBox.Text))
+                proxy.GetUserAccounts(MainWindow.Credentials).Any(x => x.BankAccountNumber != AccountFromTextBox.Text))
             {
-                ClientUtils.ShowMessage(new ErrorMessage("Niepoprawny numer konta bankowego nadawcy"));
+                ClientUtils.ShowMessage(new ErrorMessage(_resourceWrapper.InvalidBankAccountFrom));
                 return false;
             }
             if ( !AccountUtils.ValidateAccountNumber(AccountToTextBox.Text) )
             {
-                ClientUtils.ShowMessage(new ErrorMessage("Niepoprawny numer konta bankowego odbiorcy"));
+                ClientUtils.ShowMessage(new ErrorMessage(_resourceWrapper.InvalidBankAccountTo));
                 return false;
             }
             if (AccountFromTextBox.Text == AccountToTextBox.Text)
             {
-                ClientUtils.ShowMessage(new ErrorMessage("Konto odbiory i nadawcy nie mogą być takie same" ));
+                ClientUtils.ShowMessage(new ErrorMessage(_resourceWrapper.SameFromToBankAccounts));
                 return false;
             }
             if ( TitleTextBox.Text == "" )
             {
-                ClientUtils.ShowMessage(new ErrorMessage("Proszę wypełnić polę \"Tytuł\""));
+                ClientUtils.ShowMessage(new ErrorMessage(_resourceWrapper.NoTitleError));
                 return false;
             }
 
             decimal amountDec;
-            if (!decimal.TryParse(AmountTextBox.Text.Replace(".", ","), out amountDec) || amountDec <= 0)
-            {
-                ClientUtils.ShowMessage(new ErrorMessage("Niepoprawna kwota przelewu"));
-                return false;
-            }
+            if (decimal.TryParse(AmountTextBox.Text.Replace(".", ","), out amountDec) && amountDec > 0) return true;
 
-            return true;
+            ClientUtils.ShowMessage(new ErrorMessage(_resourceWrapper.WrongAmount));
+            return false;
         }
     }
 }

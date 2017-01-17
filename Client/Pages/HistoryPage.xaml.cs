@@ -1,17 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using System.Windows.Controls;
 using Client.Windows;
 
 namespace Client.Pages
@@ -21,10 +8,20 @@ namespace Client.Pages
     /// </summary>
     public partial class HistoryPage : Page
     {
+        private readonly ResourceWrapper _resourceWrapper = new ResourceWrapper();
+
         public HistoryPage()
         {
             InitializeComponent();
 
+            // Initialize headers column name
+            HistoryOperationType.Header = _resourceWrapper.HistoryOperationTypeListViewHeader;
+            HistoryFrom.Header = _resourceWrapper.HistoryFromListViewHeader;
+            HistoryTo.Header = _resourceWrapper.HistoryToListViewHeader;
+            HistoryAmount.Header = _resourceWrapper.HistoryAmountListViewHeader;
+            HistoryDate.Header = _resourceWrapper.HistoryDateListViewHeader;
+
+            // Fill History ListView 
             RefreshHistoryList();
         }
 

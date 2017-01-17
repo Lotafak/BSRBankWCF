@@ -8,10 +8,12 @@ namespace Client.Pages
     /// </summary>
     public partial class MainPage : Page
     {
+        private readonly ResourceWrapper _resourceWrapper = new ResourceWrapper();
         public MainPage()
         {
             InitializeComponent();
-
+            BankAccountNumber.Header = _resourceWrapper.BankAccountNumberListViewHeader;
+            BankAccountCondition.Header = _resourceWrapper.BankAccountConditionListViewHeader;
             RefreshGridview();
         }
 

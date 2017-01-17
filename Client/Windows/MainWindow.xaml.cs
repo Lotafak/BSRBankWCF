@@ -14,16 +14,26 @@ namespace Client.Windows
     /// </summary>
     public partial class MainWindow
     {
+        private static ResourceWrapper _resourceWrapper = new ResourceWrapper();
+        private Pages.MainPage _gridViewPage;
+
         /// <summary>
         ///     Keeps Base64 encrypted credentials within MainWindow Context
         /// </summary>
         public static string Credentials { get; private set; }
 
-        private Pages.MainPage _gridViewPage;
-
         public MainWindow()
         {
             InitializeComponent();
+
+            LoggedAsLabel.Content = _resourceWrapper.MainLoggedAs;
+            CreateAccount.Content = _resourceWrapper.MainCreateAccount;
+            DepositButton.Content = _resourceWrapper.MainDepositMoney;
+            WithdrawButton.Content = _resourceWrapper.MainWithdrawMoney;
+            ExternalTransfer.Content = _resourceWrapper.ExternalTransfer;
+            InternalTransfer.Content = _resourceWrapper.InternalTransfer;
+            HomeButton.Content = _resourceWrapper.MainHome;
+            HistoryButton.Content = _resourceWrapper.MainHistory;
 
             Main.NavigationService.Navigating += NavigationServiceOnNavigating;
         }

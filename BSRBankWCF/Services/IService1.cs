@@ -4,6 +4,9 @@ using BSRBankWCF.Models;
 
 namespace BSRBankWCF.Services
 {
+    /// <summary>
+    /// Interface for communicaiton with client.
+    /// </summary>
     [ServiceContract]
     public interface IService1
     {
