@@ -138,6 +138,9 @@
   <data name="HistoryOperationTypeListViewHeader" xml:space="preserve">
     <value>Operacja</value>
   </data>
+  <data name="HistoryTitleListViewHeader" xml:space="preserve">
+    <value>Tytuł</value>
+  </data>
   <data name="HistoryToListViewHeader" xml:space="preserve">
     <value>Do</value>
   </data>

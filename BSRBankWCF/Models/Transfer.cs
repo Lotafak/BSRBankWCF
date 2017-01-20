@@ -11,7 +11,7 @@ namespace BSRBankWCF.Models
     {
         [DataMember]
         [BsonSerializer(typeof(MongoDbDecimalSerializer))]
-        public decimal Amount { get; set; }
+        public int Amount { get; set; }
 
         [DataMember]
         [DisplayName("AccountFrom")]

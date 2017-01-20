@@ -29,10 +29,10 @@ namespace BSRBankWCF.Services.Implementations
             var res = sr.ReadToEnd();
 
             var ctx = WebOperationContext.Current;
-            if (ctx == null)
+            if ( ctx == null )
                 return AccountUtils.CreateJsonErrorResponse("Bład wewnętrzny");
 
-            if (ctx.IncomingRequest.Headers[HttpRequestHeader.ContentType] != "application/json")
+            if ( ctx.IncomingRequest.Headers[HttpRequestHeader.ContentType] != "application/json" )
             {
                 ctx.OutgoingResponse.StatusCode = HttpStatusCode.BadRequest;
                 return AccountUtils.CreateJsonErrorResponse("Zły nagłówek: " + HttpRequestHeader.ContentType);
@@ -47,7 +47,7 @@ namespace BSRBankWCF.Services.Implementations
             var truth = AccountUtils.Base64Encode("admin:admin");
 
             // Checks credentials
-            if (truth != credentials)
+            if ( truth != credentials )
             {
                 ctx.OutgoingResponse.StatusCode = HttpStatusCode.Forbidden;
                 return AccountUtils.CreateJsonErrorResponse("Błąd uwierzytelniania");
@@ -83,7 +83,9 @@ namespace BSRBankWCF.Services.Implementations
                 return AccountUtils.CreateJsonErrorResponse($"Nie znaleziono konta: {bankAccountNumberTo}");
             }
 
-            var newAmountTo = accountTo.Amount + transfer.Amount;
+            var decimalAmount = (decimal)transfer.Amount / 100;
+
+            var newAmountTo = accountTo.Amount + decimalAmount;
 
             var updateTo = Builders<User>.Update.Set(x => x.Accounts[-1].Amount, newAmountTo);
             var resultTo = collection.UpdateOne(filterTo, updateTo);

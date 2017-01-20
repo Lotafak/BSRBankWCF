@@ -142,6 +142,7 @@ namespace BSRBankWCF.Services.Implementations
             if (account == null)
                 return new ErrorMessage($"Błędne numer rachunku bankowego: {transfer.From}");
 
+            // TODO: DO THE FUCKING INT TRANSFER !
             var newAmount = account.Amount - transfer.Amount;
             if (newAmount < 0)
                 return new ErrorMessage("Nie wystarczająca ilość środków na koncie");

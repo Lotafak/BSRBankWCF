@@ -19,6 +19,7 @@ namespace Client.Pages
 
             // Initialize headers column name
             HistoryOperationType.Header = _resourceWrapper.HistoryOperationTypeListViewHeader;
+            HistoryTitle.Header = _resourceWrapper.HistoryTitleListViewHeader;
             HistoryFrom.Header = _resourceWrapper.HistoryFromListViewHeader;
             HistoryTo.Header = _resourceWrapper.HistoryToListViewHeader;
             HistoryAmount.Header = _resourceWrapper.HistoryAmountListViewHeader;

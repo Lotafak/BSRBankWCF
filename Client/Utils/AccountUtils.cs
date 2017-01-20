@@ -5,71 +5,53 @@ namespace Client.Utils
 {
     public class AccountUtils
     {
-        public static bool ValidateAccountNumber(string acc)
+        public static bool ValidateAccountNumber( string input )
         {
-            if (acc.Length != 26) return false;
-            var check = acc.Substring(2) + acc.Substring(0, 2);
-            var intarr = new string[4];
-            check = check.TrimStart('0');
-            for (var i = 0; i < intarr.Length; i++)
-            {
-                if (i*6 + 6 < check.Length)
-                    intarr[i] = check.Substring(i*6, 6);
-                else
-                    intarr[i] = check.Substring(i*6);
-            }
-            for (var i = 0; i < intarr.Length; i++)
-            {
-                var mod = int.Parse(intarr[i])%97;
-                if (i >= intarr.Length - 1)
-                {
-                    return mod == 1;
-                }
-                var next = intarr[i + 1];
-                var nextString = mod + next;
-                intarr[i + 1] = nextString;
-            }
-            return false;
+            if ( input.Length != 26 && input.Length != 32 ) return false;
+
+            input = input.Replace(" ", String.Empty);
+
+            string checkSum = input.Substring(0, 2);
+            string accountNumber = input.Substring(2);
+            const int countryCode = 2521;
+            string reversedDigits = accountNumber + countryCode + checkSum;
+            int controlNum = ModString(reversedDigits, 97);
+
+            return ( controlNum == 1 );
+
         }
 
-        public static string CreateAccountNumber(string bankId, int id)
+        static int ModString( string x, int y )
         {
-            if (bankId.Length != 8) return "";
-
-            var accountIdWithZeros = CreateAccountId(id);
-            var check = bankId + accountIdWithZeros + "00";
-            var intarr = new string[4];
-            check = check.TrimStart('0');
-            for (var i = 0; i < intarr.Length; i++)
-            {
-                if (i*6 + 6 < check.Length)
-                    intarr[i] = check.Substring(i*6, 6);
-                else
-                    intarr[i] = check.Substring(i*6);
-            }
-            for (var i = 0; i < intarr.Length; i++)
-            {
-                var mod = int.Parse(intarr[i])%97;
-                if (i >= intarr.Length - 1)
-                {
-                    var chksum = 98 - mod;
-                    var strchcksum = "";
-                    if (chksum.ToString().Length == 1)
-                        strchcksum = "0";
-                    strchcksum += chksum;
-                    return strchcksum + bankId + accountIdWithZeros;
-                }
-                var next = intarr[i + 1];
-                var nextString = mod + next;
-                intarr[i + 1] = nextString;
-            }
-            return "";
+            if ( x.Length == 0 )
+                return 0;
+            string x2 = x.Substring(0, x.Length - 1); // first digits
+            int x3 = int.Parse(x.Substring(x.Length - 1));   // last digit
+            return ( ModString(x2, y) * 10 + x3 ) % y;
         }
 
-        public static string CreateAccountId(int id)
+        public static string CreateAccountNumber( string bankId, int id )
+        {
+            var account = CreateBankAccountNumberFromId(id);
+            var stringAcc = bankId + account;
+            var x = "00";
+            var corrAcc = "";
+            while ( !ValidateAccountNumber(corrAcc) )
+            {
+                corrAcc = x + stringAcc;
+                var chksum = int.Parse(x) + 1;
+                if ( chksum < 10 )
+                    x = "0" + chksum;
+                else
+                    x = chksum.ToString();
+            }
+            return corrAcc;
+        }
+
+        public static string CreateBankAccountNumberFromId( int id )
         {
             var sb = new StringBuilder();
-            for (var i = 0; i < 16 - id.ToString().Length; i++)
+            for ( var i = 0; i < 16 - id.ToString().Length; i++ )
                 sb.Append(0);
             sb.Append(id);
             return sb.ToString();

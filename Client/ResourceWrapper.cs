@@ -32,6 +32,7 @@ namespace Client
         public string BankAccountConditionListViewHeader => _rm.GetString("BankAccountConditionListViewHeader");
 
         public string HistoryOperationTypeListViewHeader => _rm.GetString("HistoryOperationTypeListViewHeader");
+        public string HistoryTitleListViewHeader => _rm.GetString("HistoryTitleListViewHeader");
         public string HistoryFromListViewHeader => _rm.GetString("HistoryFromListViewHeader");
         public string HistoryToListViewHeader => _rm.GetString("HistoryToListViewHeader");
         public string HistoryAmountListViewHeader => _rm.GetString("HistoryAmountListViewHeader");

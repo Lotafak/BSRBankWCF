@@ -124,6 +124,15 @@ namespace Client.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tytuł.
+        /// </summary>
+        internal static string HistoryTitleListViewHeader {
+            get {
+                return ResourceManager.GetString("HistoryTitleListViewHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Do.
         /// </summary>
         internal static string HistoryToListViewHeader {

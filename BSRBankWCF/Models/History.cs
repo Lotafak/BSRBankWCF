@@ -23,5 +23,7 @@ namespace BSRBankWCF.Models
         public string To { get; set; }
 
         public decimal Amount { get; set; }
+
+        public string Title { get; set; }
     }
 }
