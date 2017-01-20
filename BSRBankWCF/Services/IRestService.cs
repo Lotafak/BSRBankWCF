@@ -6,7 +6,9 @@ using BSRBankWCF.Models;
 
 namespace BSRBankWCF.Services
 {
-    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the interface name "IRestService" in both code and config file together.
+    /// <summary>
+    /// Rest service for receiving transfers from another banks
+    /// </summary>
     [ServiceContract]
     public interface IRestService
     {
@@ -14,7 +16,7 @@ namespace BSRBankWCF.Services
         [WebInvoke(Method = "POST",
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
-            UriTemplate = "{bankAccountNumber}")]
-        Stream RecieveTransfer( Stream streamOfData, string bankAccountNumber );
+            UriTemplate = "{bankAccountNumberTo}")]
+        Stream RecieveTransfer( Stream streamOfData, string bankAccountNumberTo );
     }
 }

@@ -80,6 +80,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Converters\DecimalConverter.cs" />
     <Compile Include="Models\ErrorResponse.cs" />
     <Compile Include="Models\History.cs" />
     <Compile Include="Program.cs" />

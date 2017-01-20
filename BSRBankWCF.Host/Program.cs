@@ -9,9 +9,13 @@ namespace BSRBankWCF.DefaultHost
 {
     class Program
     {
+        /// <summary>
+        /// Hosting REST service and SOAP services
+        /// </summary>
+        /// <param name="args"></param>
         public static void Main( string[] args )
         {
-            var baseAddress = "http://localhost:8000/accounts";
+            var baseAddress = "http://192.168.1.100:8080/accounts";
             var uri = new Uri(baseAddress);
             var host = new ServiceHost(typeof(RestService), uri);
             host.AddServiceEndpoint(typeof(IRestService), GetBinding(), "").Behaviors.Add(new WebHttpBehavior());
@@ -23,6 +27,10 @@ namespace BSRBankWCF.DefaultHost
             Console.WriteLine("Host open");
             Console.ReadKey();
         }
+
+        /// <summary>
+        /// Mapping every request Content type to raw.
+        /// </summary>
         public class MyMapper : WebContentTypeMapper
         {
             public override WebContentFormat GetMessageFormatForContentType( string contentType )

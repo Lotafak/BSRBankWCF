@@ -10,6 +10,9 @@ namespace Client.Pages
     {
         private readonly ResourceWrapper _resourceWrapper = new ResourceWrapper();
 
+        /// <summary>
+        /// Initialing components and Text depending on culture
+        /// </summary>
         public HistoryPage()
         {
             InitializeComponent();
@@ -25,6 +28,9 @@ namespace Client.Pages
             RefreshHistoryList();
         }
 
+        /// <summary>
+        /// Refreshing GridView Items
+        /// </summary>
         private void RefreshHistoryList()
         {
             var proxy = new Proxy.Proxy();

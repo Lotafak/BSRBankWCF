@@ -9,6 +9,10 @@ namespace Client.Pages
     public partial class MainPage : Page
     {
         private readonly ResourceWrapper _resourceWrapper = new ResourceWrapper();
+
+        /// <summary>
+        /// Initializing components, headers and refreshing GridView items
+        /// </summary>
         public MainPage()
         {
             InitializeComponent();
@@ -17,11 +21,18 @@ namespace Client.Pages
             RefreshGridview();
         }
 
+        /// <summary>
+        /// Returns selected item in GridView
+        /// </summary>
+        /// <returns>GridView selected item</returns>
         public Account GetSelectedItem()
         {
             return (Account)AccountGridView.SelectedItem;
         }
 
+        /// <summary>
+        /// Refreshing GridView Items
+        /// </summary>
         public void RefreshGridview()
         {
             var proxy = new Proxy.Proxy();

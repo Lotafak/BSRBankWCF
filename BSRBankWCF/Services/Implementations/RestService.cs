@@ -1,7 +1,10 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.ServiceModel.Web;
+using BSRBankWCF.Converters;
 using BSRBankWCF.Models;
 using BSRBankWCF.Mongo;
 using MongoDB.Driver;
@@ -9,38 +12,57 @@ using Newtonsoft.Json;
 
 namespace BSRBankWCF.Services.Implementations
 {
-    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "RestService" in both code and config file together.
+    /// <summary>
+    /// IRestService interface implementation.
+    /// </summary>
     public class RestService : IRestService
     {
-        public Stream RecieveTransfer( Stream stream, string bankAccountNumber )
+        /// <summary>
+        /// One and only rest service enpoint hanlding external transfer.
+        /// </summary>
+        /// <param name="stream">Gets json from request body. Json deserialize to <see cref="Transfer"/></param>
+        /// <param name="bankAccountNumberTo">26-digit destination bank account number</param>
+        /// <returns></returns>
+        public Stream RecieveTransfer( Stream stream, string bankAccountNumberTo )
         {
             var sr = new StreamReader(stream);
             var res = sr.ReadToEnd();
-            var transfer = JsonConvert.DeserializeObject<Transfer>(res);
 
             var ctx = WebOperationContext.Current;
-            if ( ctx == null )
-                return AccountUtils.CreateJsonErrorResponse("Coś poszło mocno nie tak");
-            
+            if (ctx == null)
+                return AccountUtils.CreateJsonErrorResponse("Bład wewnętrzny");
+
+            if (ctx.IncomingRequest.Headers[HttpRequestHeader.ContentType] != "application/json")
+            {
+                ctx.OutgoingResponse.StatusCode = HttpStatusCode.BadRequest;
+                return AccountUtils.CreateJsonErrorResponse("Zły nagłówek: " + HttpRequestHeader.ContentType);
+            }
+
+            // Using decimal converting when f.e. amount = "0,1"
+            var transfer = JsonConvert.DeserializeObject<Transfer>(res, new JsonSerializerSettings { Converters = new List<JsonConverter> { new DecimalConverter() } });
+
             // Getting WWW-Authenticate header from POST request. eqample "Basic 23sd1"
             // Substring cuts "Basic "
             var credentials = ctx.IncomingRequest.Headers[HttpRequestHeader.Authorization].Substring(6);
             var truth = AccountUtils.Base64Encode("admin:admin");
+
+            // Checks credentials
             if (truth != credentials)
             {
                 ctx.OutgoingResponse.StatusCode = HttpStatusCode.Forbidden;
                 return AccountUtils.CreateJsonErrorResponse("Błąd uwierzytelniania");
             }
 
-            var isValidTo = AccountUtils.ValidateAccountNumber(bankAccountNumber);
-
+            // Checks destination bank account number in terms of checksum
+            var isValidTo = AccountUtils.ValidateAccountNumber(bankAccountNumberTo);
             if ( !isValidTo )
             {
                 ctx.OutgoingResponse.StatusCode = HttpStatusCode.NotFound;
-                return AccountUtils.CreateJsonErrorResponse($"Niepoprawne konto: {bankAccountNumber}");
+                return AccountUtils.CreateJsonErrorResponse($"Niepoprawne konto: {bankAccountNumberTo}");
             }
 
-            if ( bankAccountNumber == transfer.From )
+            // Checks if destination and source bank account numbers are equal
+            if ( bankAccountNumberTo == transfer.From )
             {
                 ctx.OutgoingResponse.StatusCode = HttpStatusCode.BadRequest;
                 return AccountUtils.CreateJsonErrorResponse("Konto docelowe musi być różne od konta źródłowego !");
@@ -49,15 +71,16 @@ namespace BSRBankWCF.Services.Implementations
             var collection = MongoRepository.GetCollection<User>();
             var filterTo = Builders<User>.Filter.Where(
                 x =>
-                    x.Accounts.Any(a => a.BankAccountNumber == bankAccountNumber));
+                    x.Accounts.Any(a => a.BankAccountNumber == bankAccountNumberTo));
 
             var accountTo = collection.Find(filterTo)
-                .FirstOrDefault().Accounts.FirstOrDefault(a => a.BankAccountNumber == bankAccountNumber);
+                .FirstOrDefault().Accounts.FirstOrDefault(a => a.BankAccountNumber == bankAccountNumberTo);
 
+            // If there is no destination account in database then return 404 code
             if ( accountTo == null )
             {
                 ctx.OutgoingResponse.StatusCode = HttpStatusCode.NotFound;
-                return AccountUtils.CreateJsonErrorResponse($"Nie znaleziono konta: {bankAccountNumber}");
+                return AccountUtils.CreateJsonErrorResponse($"Nie znaleziono konta: {bankAccountNumberTo}");
             }
 
             var newAmountTo = accountTo.Amount + transfer.Amount;
