@@ -31,7 +31,7 @@
   <xs:element name="WithdrawDeposit" nillable="true" type="tns:WithdrawDeposit" />
   <xs:complexType name="Transfer">
     <xs:sequence>
-      <xs:element minOccurs="0" name="Amount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Amount" type="xs:int" />
       <xs:element minOccurs="0" name="From" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Title" nillable="true" type="xs:string" />
     </xs:sequence>

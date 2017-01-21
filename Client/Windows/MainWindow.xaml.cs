@@ -1,7 +1,4 @@
-﻿using System;
-using System.Net;
-using System.Text;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
 using Client.ServiceReference1;
@@ -14,27 +11,32 @@ namespace Client.Windows
     /// </summary>
     public partial class MainWindow
     {
-        private static ResourceWrapper _resourceWrapper = new ResourceWrapper();
+        private static readonly ResourceWrapper ResourceWrapper = new ResourceWrapper();
         private Pages.MainPage _gridViewPage;
 
         /// <summary>
-        ///     Keeps Base64 encrypted credentials within MainWindow Context
+        ///  Keeps Base64 encrypted credentials within MainWindow Context
         /// </summary>
         public static string Credentials { get; private set; }
 
+        /// <summary>
+        /// MainWindow Constructor 
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();
 
-            LoggedAsLabel.Content = _resourceWrapper.MainLoggedAs;
-            CreateAccount.Content = _resourceWrapper.MainCreateAccount;
-            DepositButton.Content = _resourceWrapper.MainDepositMoney;
-            WithdrawButton.Content = _resourceWrapper.MainWithdrawMoney;
-            ExternalTransfer.Content = _resourceWrapper.ExternalTransfer;
-            InternalTransfer.Content = _resourceWrapper.InternalTransfer;
-            HomeButton.Content = _resourceWrapper.MainHome;
-            HistoryButton.Content = _resourceWrapper.MainHistory;
+            // Elements content initializing
+            LoggedAsLabel.Content = ResourceWrapper.MainLoggedAs;
+            CreateAccount.Content = ResourceWrapper.MainCreateAccount;
+            DepositButton.Content = ResourceWrapper.MainDepositMoney;
+            WithdrawButton.Content = ResourceWrapper.MainWithdrawMoney;
+            ExternalTransfer.Content = ResourceWrapper.ExternalTransfer;
+            InternalTransfer.Content = ResourceWrapper.InternalTransfer;
+            HomeButton.Content = ResourceWrapper.MainHome;
+            HistoryButton.Content = ResourceWrapper.MainHistory;
 
+            // Attach NavigationService to Window
             Main.NavigationService.Navigating += NavigationServiceOnNavigating;
         }
 
@@ -71,7 +73,7 @@ namespace Client.Windows
                 return;
 
             // Get amount money to withdraw/deposit
-            var input = Microsoft.VisualBasic.Interaction.InputBox("Proszę podać kwotę wpłaty/wypłaty", "Wpłata/wypłata");
+            var input = Microsoft.VisualBasic.Interaction.InputBox(ResourceWrapper.WithdrawDepositAmountInput, ResourceWrapper.WithdrawDeposit);
 
             if (input == "")
                 return;
@@ -82,7 +84,7 @@ namespace Client.Windows
             if (!parse || amount > long.MaxValue || amount <= 0)
             {
                 // If they do, show message and do nothing.
-                ClientUtils.ShowMessage(new ErrorMessage {IsError = true, MessageText = "Podano błędną kwotę !"});
+                ClientUtils.ShowMessage(new ErrorMessage(ResourceWrapper.WrongAmount));
                 return;
             }
 

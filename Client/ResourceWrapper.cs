@@ -51,5 +51,8 @@ namespace Client
         public string MainHistory => _rm.GetString("MainHistory");
         public string MainDepositMoney => _rm.GetString("MainDepositMoney");
         public string MainCreateAccount => _rm.GetString("MainCreateAccount");
+
+        public string WithdrawDepositAmountInput => _rm.GetString("WithdrawDepositAmountInput");
+        public string WithdrawDeposit => _rm.GetString("WithdrawDeposit");
     }
 }

@@ -1,4 +1,5 @@
 ﻿using BSRBankWCF;
+using BSRBankWCF.Utils;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace BSRBankWCFTests

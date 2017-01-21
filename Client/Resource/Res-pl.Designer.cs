@@ -295,7 +295,25 @@ namespace Client.Resource {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Niepoprawna kwota przelewu.
+        ///   Looks up a localized string similar to Wpłata/wypłata.
+        /// </summary>
+        internal static string WithdrawDeposit {
+            get {
+                return ResourceManager.GetString("WithdrawDeposit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Proszę podać kwotę wpłaty/wypłaty.
+        /// </summary>
+        internal static string WithdrawDepositAmountInput {
+            get {
+                return ResourceManager.GetString("WithdrawDepositAmountInput", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Podano błędną kwotę !.
         /// </summary>
         internal static string WrongAmount {
             get {

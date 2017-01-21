@@ -106,40 +106,74 @@ namespace Client.Proxy
         /// <summary>
         /// Async version of <see cref="ExecuteExternalTransfer"/>
         /// </summary>
-        /// <param name="transfer"></param>
-        /// <param name="accountTo"></param>
-        /// <param name="credentials"></param>
+        /// <param name="transfer">Required data to transfer</param>
+        /// <param name="accountTo">Destination bank account number</param>
+        /// <param name="credentials">Users credentials encoded in base64</param>
         /// <returns></returns>
         public Task<Message> ExecuteExternalTransferAsync(Transfer transfer, string accountTo, string credentials )
         {
             return Channel.ExecuteExternalTransferAsync(transfer, accountTo, credentials);
         }
 
+        /// <summary>
+        /// Execute internal transfer
+        /// </summary>
+        /// <param name="transfer">Required data to transfer</param>
+        /// <param name="accountTo">Destination bank account number</param>
+        /// <param name="credentials">Users credentials encoded in base64</param>
+        /// <returns></returns>
         public Message ExecuteInternalTransfer(Transfer transfer, string accountTo, string credentials)
         {
             return Channel.ExecuteInternalTransfer(transfer, accountTo, credentials);
         }
 
+        /// <summary>
+        /// Async version of <see cref="ExecuteInternalTransfer"/>
+        /// </summary>
+        /// <param name="transfer">Required data to transfer</param>
+        /// <param name="accountTo">Destination bank account number</param>
+        /// <param name="credentials">Users credentials encoded in base64</param>
+        /// <returns></returns>
         public Task<Message> ExecuteInternalTransferAsync(Transfer transfer, string accountTo, string credentials)
         {
             return Channel.ExecuteInternalTransferAsync(transfer, accountTo, credentials);
         }
 
+        /// <summary>
+        /// Get users operation history
+        /// </summary>
+        /// <param name="credentials">Base64 Users credentials</param>
+        /// <returns>List of History class items</returns>
         public List<History> GetUsersHistory(string credentials)
         {
             return Channel.GetUsersHistory(credentials);
         }
 
+        /// <summary>
+        /// Async version of <see cref="GetUsersHistory"/>
+        /// </summary>
+        /// <param name="credentials">Base64 Users credentials</param>
+        /// <returns>List of History class items</returns>
         public Task<List<History>> GetUsersHistoryAsync(string credentials)
         {
             return Channel.GetUsersHistoryAsync(credentials);
         }
 
+        /// <summary>
+        /// Creating Bank account for user
+        /// </summary>
+        /// <param name="credentials">Base64 encoded users credenetials</param>
+        /// <returns></returns>
         public Message CreateBankAccount(string credentials)
         {
             return Channel.CreateBankAccount(credentials);
         }
 
+        /// <summary>
+        /// Async version of <see cref="CreateBankAccount"/>
+        /// </summary>
+        /// <param name="credentials">Base64 encoded users credenetials</param>
+        /// <returns></returns>
         public Task<Message> CreateBankAccountAsync(string credentials)
         {
             return Channel.CreateBankAccountAsync(credentials);

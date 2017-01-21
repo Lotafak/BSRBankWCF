@@ -73,6 +73,8 @@ namespace Client.Pages
             if(!CheckTransferParameters())
                 return;
 
+            //var sb = new StringBuilder(TitleTextBox.Text);
+
             var transfer = new Transfer
             {
                 Amount = int.Parse(AmountTextBox.Text),
@@ -102,7 +104,7 @@ namespace Client.Pages
         {
             var proxy = new Proxy.Proxy();
             if ( !AccountUtils.ValidateAccountNumber(AccountFromTextBox.Text) ||
-                proxy.GetUserAccounts(MainWindow.Credentials).Any(x => x.BankAccountNumber != AccountFromTextBox.Text))
+                proxy.GetUserAccounts(MainWindow.Credentials).FirstOrDefault(x => x.BankAccountNumber == AccountFromTextBox.Text) == null)
             {
                 ClientUtils.ShowMessage(new ErrorMessage(_resourceWrapper.InvalidBankAccountFrom));
                 return false;

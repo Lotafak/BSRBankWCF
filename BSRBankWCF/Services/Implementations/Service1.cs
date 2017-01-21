@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using BSRBankWCF.Models;
 using BSRBankWCF.Models.MessageImpl;
 using BSRBankWCF.Mongo;
+using BSRBankWCF.Utils;
 using MongoDB.Driver;
 using Newtonsoft.Json;
 
@@ -24,6 +25,12 @@ namespace BSRBankWCF.Services.Implementations
     public class Service1 : IService1
     {
         private HttpClient _httpClient;
+
+        /// <summary>
+        /// Gets list of users accounts
+        /// </summary>
+        /// <param name="credentials">Base64 encoded users credentials</param>
+        /// <returns></returns>
         public List<Account> GetUserAccounts( string credentials )
         {
             return MongoRepository.GetCollection<User>()
@@ -31,6 +38,12 @@ namespace BSRBankWCF.Services.Implementations
                 .FirstOrDefault()?.Accounts;
         }
 
+        /// <summary>
+        /// Add user to database
+        /// </summary>
+        /// <param name="login">Users login</param>
+        /// <param name="password">users password</param>
+        /// <returns>Message indicating success or error</returns>
         public Message AddUser( string login, string password )
         {
             var newUser = new User(login, password);
@@ -53,10 +66,16 @@ namespace BSRBankWCF.Services.Implementations
             if ( queryUser == null )
                 MongoRepository.GetCollection<User>().InsertOneAsync(newUser);
             else
-                return new ErrorMessage($"Użytkownik już istenieje !");
-            return new ResultMessage($"Utworzono użytkownika. Proszę się zalogować");
+                return new ErrorMessage("Użytkownik już istenieje !");
+            return new ResultMessage("Utworzono użytkownika. Proszę się zalogować");
         }
 
+        /// <summary>
+        /// Perform user validation
+        /// </summary>
+        /// <param name="login">Users login</param>
+        /// <param name="password">Users password</param>
+        /// <returns></returns>
         public Message ValidateUser( string login, string password )
         {
             var credentials = AccountUtils.Base64Encode(login + ":" + password);
@@ -104,12 +123,13 @@ namespace BSRBankWCF.Services.Implementations
             {
                 var hist = new History
                 {
-                    UserLp = user.Lp,
+                    UserOrdinal = user.Ordinal,
                     Amount = withdrawDeposit.Amount,
                     From = withdrawDeposit.BankAccountNumber,
                     To = withdrawDeposit.BankAccountNumber,
                     Date = DateTime.Now,
-                    Type = Constants.WithdrawDepositType
+                    Type = Constants.WithdrawDepositType,
+                    Title = "Wpłata własna"
                 };
                 var historyCollection = MongoRepository.GetCollection<History>();
                 historyCollection.InsertOneAsync(hist);
@@ -119,11 +139,47 @@ namespace BSRBankWCF.Services.Implementations
             return new ErrorMessage("Aktualizacja stanu konta zakończona niepowodzeniem.");
         }
 
+        /// <summary>
+        /// Execute external transfer with use of http POST call
+        /// </summary>
+        /// <param name="transfer"><see cref="Transfer"/> object</param>
+        /// <param name="accountTo">Destination bank account number</param>
+        /// <param name="credentials">Base64 endoded users credentials</param>
+        /// <returns></returns>
         public Message ExecuteExternalTransfer( Transfer transfer, string accountTo, string credentials )
         {
+            var dict = new Dictionary<string, string>();
+
+            try
+            {
+                var reader =
+                    new StreamReader(
+                        File.OpenRead("map.csv"));
+
+                reader.ReadLine();
+                while ( !reader.EndOfStream )
+                {
+                    var line = reader.ReadLine();
+                    if ( line == null ) return new ErrorMessage("EndOfFileException");
+
+                    var map = line.Split(',');
+                    if ( map[1].Last() != '/' )
+                        map[1] += '/';
+                    dict.Add(map[0], map[1]);
+                }
+            }
+            catch ( FileNotFoundException )
+            {
+                return new ErrorMessage("Nie znaleziono pliku \"map.csv\"");
+            }
+
+            var bankId = accountTo.Substring(2, 8);
+
             _httpClient = new HttpClient();
-            _httpClient.BaseAddress = new Uri($"http://localhost:8000/accounts/");
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
+            _httpClient.BaseAddress = new Uri($"{dict[bankId]}accounts/");
+            //_httpClient = new HttpClient();
+            //_httpClient.BaseAddress = new Uri("http://localhost:8080/accounts/");
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", AccountUtils.Base64Encode("admin:admin"));
             _httpClient.DefaultRequestHeaders.Accept.Clear();
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
@@ -142,13 +198,21 @@ namespace BSRBankWCF.Services.Implementations
             if (account == null)
                 return new ErrorMessage($"Błędne numer rachunku bankowego: {transfer.From}");
 
-            // TODO: DO THE FUCKING INT TRANSFER !
             var newAmount = account.Amount - transfer.Amount;
             if (newAmount < 0)
                 return new ErrorMessage("Nie wystarczająca ilość środków na koncie");
 
-            var resultMessageTask = SendRequest(transfer, accountTo);
+            var transferCopy = new Transfer
+            {
+                Amount = transfer.Amount*100,
+                From = transfer.From,
+                Title = transfer.Title
+            };
+
+            // Send POST request
+            var resultMessageTask = SendRequest(transferCopy, accountTo);
             resultMessageTask.Wait();
+
             var resultMessage = resultMessageTask.Result;
             if (resultMessage.IsError)
                 return resultMessage;
@@ -168,13 +232,20 @@ namespace BSRBankWCF.Services.Implementations
                     From = transfer.From,
                     To = accountTo,
                     Type = Constants.ExternalTransferType,
-                    UserLp = user.Lp
+                    UserOrdinal = user.Ordinal,
+                    Title = transfer.Title
                 };
                 historyCollection.InsertOneAsync(historyRecord);
             }
             return resultMessage;
         }
-
+        /// <summary>
+        /// Execute internal transfer
+        /// </summary>
+        /// <param name="transfer"><see cref="Transfer"/> object</param>
+        /// <param name="accountTo">Destination bank account number</param>
+        /// <param name="credentials">Base64 endoded users credentials</param>
+        /// <returns></returns>
         public Message ExecuteInternalTransfer(Transfer transfer, string accountTo, string credentials)
         {
             var filter = Builders<User>.Filter
@@ -226,23 +297,34 @@ namespace BSRBankWCF.Services.Implementations
                 From = transfer.From,
                 To = accountTo,
                 Type = Constants.InternalTransferType,
-                UserLp = user.Lp
+                UserOrdinal = user.Ordinal,
+                Title = transfer.Title
             };
             historyCollection.InsertOneAsync(historyRecord);
 
             return new ResultMessage("Operacja zakończona pomyślnie");
         }
 
+        /// <summary>
+        /// Gets users operation history
+        /// </summary>
+        /// <param name="credentials">Base64 encoded credentials</param>
+        /// <returns></returns>
         public List<History> GetUsersHistory(string credentials)
         {
             var user = MongoRepository.GetCollection<User>()
                 .Find(Builders<User>.Filter.Where(x =>x.Credentials == credentials))
                 .FirstOrDefault();
             return user == null ? null : MongoRepository.GetCollection<History>()
-                .Find(Builders<History>.Filter.Where(x => x.UserLp == user.Lp))
+                .Find(Builders<History>.Filter.Where(x => x.UserOrdinal == user.Ordinal))
                 ?.ToList();
         }
 
+        /// <summary>
+        /// Create new bank account for specified user
+        /// </summary>
+        /// <param name="credentials">Users </param>
+        /// <returns></returns>
         public Message CreateBankAccount(string credentials)
         {
             var filter = Builders<User>.Filter.Where(x => x.Credentials == credentials);
@@ -267,7 +349,7 @@ namespace BSRBankWCF.Services.Implementations
 
         private async Task<Message> SendRequest( Transfer transfer, string accountTo )
         {
-            var response = await _httpClient.PostAsync(accountTo, new StringContent(JsonConvert.SerializeObject(transfer), Encoding.UTF8));
+            var response = await _httpClient.PostAsync(accountTo, new StringContent(JsonConvert.SerializeObject(transfer), Encoding.UTF8, "application/json"));
 
             Message responseMessage;
 

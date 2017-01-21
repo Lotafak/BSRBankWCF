@@ -195,8 +195,14 @@
   <data name="TransferTo" xml:space="preserve">
     <value>Konto odbiorcy:</value>
   </data>
+  <data name="WithdrawDeposit" xml:space="preserve">
+    <value>Wpłata/wypłata</value>
+  </data>
+  <data name="WithdrawDepositAmountInput" xml:space="preserve">
+    <value>Proszę podać kwotę wpłaty/wypłaty</value>
+  </data>
   <data name="WrongAmount" xml:space="preserve">
-    <value>Niepoprawna kwota przelewu</value>
+    <value>Podano błędną kwotę !</value>
   </data>
   <data name="WrongLoginParameters" xml:space="preserve">
     <value>Niepoprawn login i/lub hasło</value>

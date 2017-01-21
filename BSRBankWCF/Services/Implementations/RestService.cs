@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -7,6 +6,7 @@ using System.ServiceModel.Web;
 using BSRBankWCF.Converters;
 using BSRBankWCF.Models;
 using BSRBankWCF.Mongo;
+using BSRBankWCF.Utils;
 using MongoDB.Driver;
 using Newtonsoft.Json;
 
@@ -29,17 +29,16 @@ namespace BSRBankWCF.Services.Implementations
             var res = sr.ReadToEnd();
 
             var ctx = WebOperationContext.Current;
-            if ( ctx == null )
+            if (ctx == null)
                 return AccountUtils.CreateJsonErrorResponse("Bład wewnętrzny");
 
-            if ( ctx.IncomingRequest.Headers[HttpRequestHeader.ContentType] != "application/json" )
+            if (!ctx.IncomingRequest.Headers[HttpRequestHeader.ContentType].Contains("application/json"))
             {
                 ctx.OutgoingResponse.StatusCode = HttpStatusCode.BadRequest;
                 return AccountUtils.CreateJsonErrorResponse("Zły nagłówek: " + HttpRequestHeader.ContentType);
             }
-
-            // Using decimal converting when f.e. amount = "0,1"
-            var transfer = JsonConvert.DeserializeObject<Transfer>(res, new JsonSerializerSettings { Converters = new List<JsonConverter> { new DecimalConverter() } });
+            
+            var transfer = JsonConvert.DeserializeObject<Transfer>(res);
 
             // Getting WWW-Authenticate header from POST request. eqample "Basic 23sd1"
             // Substring cuts "Basic "
@@ -47,7 +46,7 @@ namespace BSRBankWCF.Services.Implementations
             var truth = AccountUtils.Base64Encode("admin:admin");
 
             // Checks credentials
-            if ( truth != credentials )
+            if (truth != credentials)
             {
                 ctx.OutgoingResponse.StatusCode = HttpStatusCode.Forbidden;
                 return AccountUtils.CreateJsonErrorResponse("Błąd uwierzytelniania");
@@ -83,9 +82,7 @@ namespace BSRBankWCF.Services.Implementations
                 return AccountUtils.CreateJsonErrorResponse($"Nie znaleziono konta: {bankAccountNumberTo}");
             }
 
-            var decimalAmount = (decimal)transfer.Amount / 100;
-
-            var newAmountTo = accountTo.Amount + decimalAmount;
+            var newAmountTo = accountTo.Amount + (transfer.Amount / 100);
 
             var updateTo = Builders<User>.Update.Set(x => x.Accounts[-1].Amount, newAmountTo);
             var resultTo = collection.UpdateOne(filterTo, updateTo);

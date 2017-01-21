@@ -3,27 +3,33 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using BSRBankWCF.Mongo;
+using BSRBankWCF.Utils;
 using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Driver;
 
 namespace BSRBankWCF.Models
 {
+    /// <summary>
+    /// User model class
+    /// </summary>
     [DataContract]
     public class User
     {
+        /// <summary>
+        /// Contructor creating user with new account contains 0 money
+        /// </summary>
+        /// <param name="login">Users login</param>
+        /// <param name="password">Users password</param>
         public User(string login, string password)
         {
-            Lp = getLastUserIndex() + 1;
+            Ordinal = getLastUserIndex() + 1;
             Credentials = AccountUtils.Base64Encode(login + ":" + password);
-            
-            Accounts.Add(new Account
-            {
-                BankAccountNumber = AccountUtils.CreateAccountNumber(Constants.BankId, getLastAccountIndex().Result + 1),
-                Amount = 0
-            });
+            CreateNewAccount();
         }
 
+        /// <summary>
+        /// Creates new account containing 0 money
+        /// </summary>
         public void CreateNewAccount()
         {
             Accounts.Add(new Account
@@ -33,14 +39,25 @@ namespace BSRBankWCF.Models
             });
         }
 
-
+        /// <summary>
+        /// Users Id
+        /// </summary>
         public ObjectId Id { get; set; }
 
-        public int Lp { get; set; }
+        /// <summary>
+        /// Users ordinal number
+        /// </summary>
+        public int Ordinal { get; set; }
 
+        /// <summary>
+        /// Base64 encoded users credentials
+        /// </summary>
         [DataMember]
         public string Credentials { get; set; }
 
+        /// <summary>
+        /// List of users accounts
+        /// </summary>
         [DataMember]
         public List<Account> Accounts { get; set; } = new List<Account>();
 
@@ -48,15 +65,10 @@ namespace BSRBankWCF.Models
         {
             var user = MongoRepository.GetDatabase().GetCollection<User>(Constants.UserCollection)
                 .Find(new BsonDocument())
-                .Sort(new BsonDocument("Lp", -1))
+                .Sort(new BsonDocument("Ordinal", -1))
                 .FirstOrDefault();
 
-
-            //var user = MongoRepository.GetCollection<User>()
-            //    .Find(new BsonDocument())
-            //    .FirstOrDefault();
-
-            return user?.Lp ?? 0;
+            return user?.Ordinal ?? 0;
         }
 
         private async Task<int> getLastAccountIndex()

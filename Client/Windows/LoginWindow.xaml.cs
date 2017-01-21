@@ -15,12 +15,20 @@ namespace Client.Windows
         private readonly MainWindow _mainWindow = new MainWindow();
         private readonly ResourceWrapper _resourceWrapper = new ResourceWrapper();
 
+        /// <summary>
+        /// LoginWindows constructor=
+        /// </summary>
         public LoginWindow()
         {
             InitializeComponent();
+
+            // Attaching event to MainWindow created in background
             DialogFinished += _mainWindow.loginWindow_LoginSuccesful;
         }
 
+        /// <summary>
+        /// EventHandler handling Loginwindow succesfull login
+        /// </summary>
         public event EventHandler<LoginWindowEventArgs> DialogFinished;
 
         private void regiser_button_OnClick( object sender, RoutedEventArgs e )

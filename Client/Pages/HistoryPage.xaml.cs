@@ -1,12 +1,11 @@
-﻿using System.Windows.Controls;
-using Client.Windows;
+﻿using Client.Windows;
 
 namespace Client.Pages
 {
     /// <summary>
     /// Interaction logic for HistoryPage.xaml
     /// </summary>
-    public partial class HistoryPage : Page
+    public partial class HistoryPage
     {
         private readonly ResourceWrapper _resourceWrapper = new ResourceWrapper();
 

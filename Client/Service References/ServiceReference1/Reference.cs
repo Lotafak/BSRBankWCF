@@ -142,10 +142,9 @@ namespace Client.ServiceReference1 {
     [System.Runtime.Serialization.DataContractAttribute(Name="ErrorMessage", Namespace="http://schemas.datacontract.org/2004/07/BSRBankWCF.Models.MessageImpl")]
     [System.SerializableAttribute()]
     public partial class ErrorMessage : Client.ServiceReference1.Message {
-        public ErrorMessage()
+        private ErrorMessage()
         {
         }
-
         public ErrorMessage( string message )
         {
             MessageText = message;
@@ -262,7 +261,7 @@ namespace Client.ServiceReference1 {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private decimal AmountField;
+        private int AmountField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string FromField;
@@ -281,7 +280,7 @@ namespace Client.ServiceReference1 {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public decimal Amount {
+        public int Amount {
             get {
                 return this.AmountField;
             }
