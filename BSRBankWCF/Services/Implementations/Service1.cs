@@ -157,26 +157,31 @@ namespace BSRBankWCF.Services.Implementations
                         File.OpenRead("map.csv"));
 
                 reader.ReadLine();
-                while ( !reader.EndOfStream )
+                while (!reader.EndOfStream)
                 {
                     var line = reader.ReadLine();
-                    if ( line == null ) return new ErrorMessage("EndOfFileException");
+                    if (line == null) return new ErrorMessage("EndOfFileException");
 
                     var map = line.Split(',');
-                    if ( map[1].Last() != '/' )
+                    if (map[1].Last() != '/')
                         map[1] += '/';
                     dict.Add(map[0], map[1]);
                 }
+
+                var bankId = accountTo.Substring(2, 8);
+
+                _httpClient = new HttpClient();
+                _httpClient.BaseAddress = new Uri($"{dict[bankId]}accounts/");
             }
-            catch ( FileNotFoundException )
+            catch (FileNotFoundException)
             {
                 return new ErrorMessage("Nie znaleziono pliku \"map.csv\"");
             }
+            catch (KeyNotFoundException ex)
+            {
+                return new ErrorMessage(ex.Message);
+            }
 
-            var bankId = accountTo.Substring(2, 8);
-
-            _httpClient = new HttpClient();
-            _httpClient.BaseAddress = new Uri($"{dict[bankId]}accounts/");
             //_httpClient = new HttpClient();
             //_httpClient.BaseAddress = new Uri("http://localhost:8080/accounts/");
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", AccountUtils.Base64Encode("admin:admin"));
